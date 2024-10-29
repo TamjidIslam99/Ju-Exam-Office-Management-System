@@ -1,0 +1,25 @@
+<!-- templates/accounts/login.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Login</h2>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+  <p>Don't have an account? Register as:
+    <a href="{% url 'register_exam_office' %}">Exam Office/Admin</a> |
+    <a href="{% url 'register_department' %}">Department</a> |
+    <a href="{% url 'register_teacher' %}">Teacher</a> |
+    <a href="{% url 'register_student' %}">Student</a>
+  </p>
+{% endblock %}
