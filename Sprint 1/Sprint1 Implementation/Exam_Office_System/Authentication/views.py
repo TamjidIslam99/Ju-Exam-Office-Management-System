@@ -9,6 +9,7 @@ from .forms import (
     DepartmentRegistrationForm,
     TeacherRegistrationForm,
     StudentRegistrationForm,
+    LoginForm,
 )
 from Exam_Office.models import User, Department, Teacher, Student, ExamOfficeOrAdmin
 from django.views.generic import TemplateView
@@ -116,3 +117,23 @@ class RegisterStudentView(View):
 
 
 
+class LoginView(View):
+    """View for user login."""
+
+    def get(self, request):
+        form = LoginForm()
+        return render(request, 'authentication/login.html', {'form': form})
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                messages.success(request, 'Logged in successfully.')
+                return redirect('home')
+            else:
+                messages.error(request, 'Invalid username or password.')
+        return render(request, 'authentication/login.html', {'form': form})

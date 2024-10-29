@@ -7,6 +7,7 @@ from .views import (
     RegisterTeacherView,
     RegisterStudentView,
     HomePageView,
+    LoginView
 )
 
 urlpatterns = [
@@ -15,6 +16,7 @@ urlpatterns = [
     path('register/department/', RegisterDepartmentView.as_view(), name='register_department'),
     path('register/teacher/', RegisterTeacherView.as_view(), name='register_teacher'),
     path('register/student/', RegisterStudentView.as_view(), name='register_student'),
+    path('login/', LoginView.as_view(), name='login'),
 
 
 ]
