@@ -1,0 +1,11 @@
+<!-- templates/final_results.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Final Results Published{% endblock %}
+
+{% block content %}
+<h2>Results Published Successfully</h2>
+<p>The results for the exam {{ exam }} have been published successfully.</p>
+<a href="{% url 'publish_result:select_exam' %}" class="btn btn-primary">Back to Select Exam</a>
+{% endblock %}

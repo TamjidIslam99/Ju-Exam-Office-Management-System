@@ -1,0 +1,16 @@
+<!-- Publish_Result/templates/Publish_Result/upload_results.html -->
+{% extends './base.html' %}
+
+{% block title %}Upload Results{% endblock %}
+
+{% block content %}
+<h2>Upload Results for {{ exam }}</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="fileInput">Upload XML/CSV File:</label>
+        <input type="file" class="form-control" id="fileInput" name="file" accept=".xml, .csv" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+{% endblock %}

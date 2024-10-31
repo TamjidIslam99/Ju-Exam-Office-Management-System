@@ -1,0 +1,35 @@
+{% extends './base.html' %}
+
+{% block title %}Select Exam{% endblock %}
+
+{% block content %}
+<h2>Select Exam to Enter Results</h2>
+<form method="POST" action="{% url 'publish_result:select_exam' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="departmentSelect">Choose Department:</label>
+        <select class="form-control" id="departmentSelect" name="department_id" required>
+            <option value="" disabled selected>Select a department</option>
+            {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="sessionInput">Session:</label>
+        <input type="text" class="form-control" id="sessionInput" name="session" required placeholder="Enter session">
+    </div>
+    
+    <div class="form-group">
+        <label for="courseCodeInput">Course Code:</label>
+        <input type="text" class="form-control" id="courseCodeInput" name="course_code" required placeholder="Enter course code">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Find Exam</button>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+</form>
+{% endblock %}
