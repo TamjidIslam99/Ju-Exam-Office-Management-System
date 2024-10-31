@@ -1,0 +1,15 @@
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+<h2>Register as Student</h2>
+<form method="post">
+    {% csrf_token %}
+    <h3>User Information</h3>
+    {{ user_form.as_p }}
+    
+    <h3>Student Details</h3>
+    {{ profile_form.as_p }}
+    
+    <button type="submit">Register</button>
+</form>
+{% endblock %}
