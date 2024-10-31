@@ -6,6 +6,11 @@ import xml.etree.ElementTree as ET
 from django.contrib import messages
 from django.db.models import Exists, OuterRef
 
+from django.db.models import Avg, F, Q
+from django.shortcuts import redirect
+from django.utils import timezone
+from .models import PublishedResult
+
 class SelectExamView(LoginRequiredMixin, View):
     def get(self, request):
         departments = Department.objects.all()  # Get all departments
@@ -98,48 +103,62 @@ class UploadResultsView(LoginRequiredMixin, View):
 
         return redirect('publish_result:select_exam')  # Redirect to select exam or a success page
 
+
 class SemesterYearlyResultView(LoginRequiredMixin, View):
+    template_name = 'Publish_Result/semester_yearly_result.html'
+
     def get(self, request):
-        # Fetch all departments to display in the form
         departments = Department.objects.all()
-        return render(request, 'Publish_Result/semester_yearly_result.html', {
-            'departments': departments,
-            'selected_department': None,
-            'selected_session': None,
-            'exam_results': None
-        })
+        return render(request, self.template_name, {'departments': departments})
 
     def post(self, request):
         department_id = request.POST.get('department_id')
         session = request.POST.get('session')
+        selected_department = Department.objects.get(id=department_id)
+        
+        exams = Exam.objects.filter(department_id=department_id, session=session).select_related('course')
+        
+        # Fetch results status for each exam
+        exam_results = []
+        all_results_uploaded = True
 
-        # Fetch all departments again for the context
-        departments = Department.objects.all()
-
-        # Validate input
-        if not department_id or not session:
-            return render(request, 'Publish_Result/semester_yearly_result.html', {
-                'departments': departments,
-                'error': 'Please select a department and session.',
-                'selected_department': department_id,
-                'selected_session': session,
-                'exam_results': None
+        for exam in exams:
+            has_results_uploaded = Result.objects.filter(exam=exam).exists()
+            exam_results.append({
+                'exam': exam,
+                'has_results_uploaded': has_results_uploaded
             })
+            if not has_results_uploaded:
+                all_results_uploaded = False
 
-        # Retrieve exams based on the selected department and session
-        exam_results = Exam.objects.filter(
-            department_id=department_id,
-            session=session
-        ).annotate(
-            has_results_uploaded=Exists(
-                Result.objects.filter(exam_id=OuterRef('id'))
-            )
-        )
-
-        # Prepare the context to pass to the template
-        return render(request, 'Publish_Result/semester_yearly_result.html', {
-            'departments': departments,
-            'selected_department': department_id,
+        context = {
+            'departments': Department.objects.all(),
+            'selected_department': selected_department,
             'selected_session': session,
-            'exam_results': exam_results
-        })
+            'exam_results': exam_results,
+            'all_results_uploaded': all_results_uploaded
+        }
+
+        # If "Publish Result" button was clicked and all results are uploaded
+        if request.POST.get('publish_results') and all_results_uploaded:
+            students = Student.objects.filter(department=selected_department, session=session)
+
+            for student in students:
+                # Calculate the average marks for the student
+                average_marks = Result.objects.filter(
+                    student=student,
+                    exam__in=exams
+                ).aggregate(average_marks=Avg('marks'))['average_marks']
+
+                # Save the published result
+                PublishedResult.objects.update_or_create(
+                    department=selected_department,
+                    session=session,
+                    student=student,
+                    defaults={'average_marks': average_marks, 'publish_date': timezone.now()}
+                )
+
+            # Redirect after publishing results
+            return redirect('publish_result_success')  # Define a success URL
+
+        return render(request, self.template_name, context)

@@ -9,7 +9,7 @@
     <select name="department_id" id="department_id" required>
         <option value="">Choose a department</option>
         {% for department in departments %}
-            <option value="{{ department.id }}"{% if selected_department == department.id %} selected{% endif %}>
+            <option value="{{ department.id }}"{% if selected_department.id == department.id %} selected{% endif %}>
                 {{ department.name }}
             </option>
         {% endfor %}
@@ -22,7 +22,7 @@
 </form>
 
 {% if exam_results %}
-    <h3>Exams for {{ selected_department }} in {{ selected_session }}</h3>
+    <h3>Exams for {{ selected_department.name }} in {{ selected_session }}</h3>
     <table>
         <tr>
             <th>Exam Name</th>
@@ -35,5 +35,12 @@
             </tr>
         {% endfor %}
     </table>
+    
+    {% if all_results_uploaded %}
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="publish_results">Publish Result</button>
+        </form>
+    {% endif %}
 {% endif %}
 {% endblock %}
