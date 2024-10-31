@@ -1,0 +1,25 @@
+{% extends './base.html' %}
+
+{% block content %}
+<h2>Published Results for {{ selected_department.name }} - {{ session }}</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Average Marks</th>
+            <th>Publish Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in published_results %}
+        <tr>
+            <td>{{ result.student.registration_number }}</td>
+            <td>{{ result.average_marks }}</td>
+            <td>{{ result.publish_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'publish_result:download_csv' department_id=selected_department.id session=session %}">Download CSV</a>
+{% endblock %}

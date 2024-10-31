@@ -9,7 +9,7 @@
     <select name="department_id" id="department_id" required>
         <option value="">Choose a department</option>
         {% for department in departments %}
-            <option value="{{ department.id }}"{% if selected_department.id == department.id %} selected{% endif %}>
+            <option value="{{ department.id }}"{% if selected_department and selected_department.id == department.id %} selected{% endif %}>
                 {{ department.name }}
             </option>
         {% endfor %}
@@ -35,12 +35,15 @@
             </tr>
         {% endfor %}
     </table>
-    
+
     {% if all_results_uploaded %}
+        <h4>All results are uploaded. You can publish results.</h4>
         <form method="post">
             {% csrf_token %}
             <button type="submit" name="publish_results">Publish Result</button>
         </form>
+    {% else %}
+        <h4>Not all results have been uploaded. Please check the exams.</h4>
     {% endif %}
 {% endif %}
 {% endblock %}
