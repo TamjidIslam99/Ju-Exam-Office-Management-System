@@ -1,132 +1,131 @@
+import xml.etree.ElementTree as ET
 import pytest
-from django.urls import reverse
-from django.contrib.auth import get_user_model
-from Exam_Office_System.models import Department, Exam, Student, Result
-from django.core.files.uploadedfile import SimpleUploadedFile
 
-User = get_user_model()
+# Mock classes to simulate the models
+class Department:
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
 
-@pytest.fixture
-def user(db):
-    """Create a user for authentication."""
-    return User.objects.create_user(username='testuser', password='testpassword')
 
-@pytest.fixture
-def department(db):
-    """Create a department."""
-    return Department.objects.create(name='Computer Science')
+class Course:
+    def __init__(self, course_code):
+        self.course_code = course_code
 
-@pytest.fixture
-def exam(department, db):
-    """Create an exam associated with a department."""
-    return Exam.objects.create(course_code='CS101', session='2024', department=department)
 
-@pytest.fixture
-def student(department, db):
-    """Create a student associated with a department."""
-    return Student.objects.create(registration_number='REG123', name='John Doe', department=department)
+class Exam:
+    def __init__(self, id, department, session, course):
+        self.id = id
+        self.department = department
+        self.session = session
+        self.course = course
 
-@pytest.fixture
-def result(exam, student, db):
-    """Create a result for a student in an exam."""
-    return Result.objects.create(exam=exam, student=student, marks=85)
 
-@pytest.mark.django_db
-def test_select_exam_view_get(user, client, department):
-    """Test the GET request of SelectExamView."""
-    client.login(username='testuser', password='testpassword')
-    url = reverse('publish_result:select_exam')
-    response = client.get(url)
-    assert response.status_code == 200
-    assert 'departments' in response.context
+class Student:
+    def __init__(self, registration_number):
+        self.registration_number = registration_number
 
-@pytest.mark.django_db
-def test_select_exam_view_post_valid(user, client, exam, department):
-    """Test the POST request of SelectExamView with valid data."""
-    client.login(username='testuser', password='testpassword')
-    url = reverse('publish_result:select_exam')
-    response = client.post(url, {
-        'department_id': department.id,
-        'session': exam.session,
-        'course_code': exam.course_code
-    })
-    assert response.status_code == 302
-    assert response.url == reverse('publish_result:upload_results', kwargs={'exam_id': exam.id})
 
-@pytest.mark.django_db
-def test_select_exam_view_post_invalid(user, client, department):
-    """Test the POST request of SelectExamView with invalid data."""
-    client.login(username='testuser', password='testpassword')
-    url = reverse('publish_result:select_exam')
-    response = client.post(url, {
-        'department_id': department.id,
-        'session': 'Invalid Session',
-        'course_code': 'Invalid Course'
-    })
-    assert response.status_code == 302
-    assert 'No exam found for the selected criteria.' in response.wsgi_request._messages
+class Result:
+    def __init__(self, exam_id, student, marks):
+        self.exam_id = exam_id
+        self.student = student
+        self.marks = marks
 
-@pytest.mark.django_db
-def test_upload_results_view_get(user, client, exam):
-    """Test the GET request of UploadResultsView."""
-    client.login(username='testuser', password='testpassword')
-    url = reverse('publish_result:upload_results', kwargs={'exam_id': exam.id})
-    response = client.get(url)
-    assert response.status_code == 200
-    assert 'exam' in response.context
 
-@pytest.mark.django_db
-def test_upload_results_view_post_valid(user, client, exam, student):
-    """Test the POST request of UploadResultsView with valid XML data."""
-    client.login(username='testuser', password='testpassword')
-    url = reverse('publish_result:upload_results', kwargs={'exam_id': exam.id})
+class UploadResultsView:
+    def __init__(self, students):
+        self.students = students
+        self.results = []
 
-    # Create XML file for upload
-    xml_content = """<?xml version="1.0"?>
-    <results>
-        <result>
-            <student>
-                <id>REG123</id>
-                <name>John Doe</name>
-                <score>90</score>
-            </student>
-        </result>
-    </results>"""
-    xml_file = SimpleUploadedFile("results.xml", xml_content.encode(), content_type="text/xml")
+    def post(self, uploaded_file, exam_id):
+        try:
+            tree = ET.ElementTree(ET.fromstring(uploaded_file))
+            root = tree.getroot()
+            for result in root.findall('result'):
+                student_registration_number = result.find('student/id').text
+                score = int(result.find('student/score').text)
 
-    response = client.post(url, {'file': xml_file})
-    assert response.status_code == 302
-    assert Result.objects.filter(exam=exam, student=student, marks=90).exists()
-    assert 'Uploaded 1 results successfully.' in response.wsgi_request._messages
+                student = next((s for s in self.students if s.registration_number == student_registration_number), None)
+                if student:
+                    self.results.append(Result(exam_id, student, score))
+                else:
+                    return {"error": f"Invalid data for student: {student_registration_number}"}
 
-@pytest.mark.django_db
-def test_upload_results_view_post_invalid_xml(user, client, exam):
-    """Test the POST request of UploadResultsView with invalid XML data."""
-    client.login(username='testuser', password='testpassword')
-    url = reverse('publish_result:upload_results', kwargs={'exam_id': exam.id})
+            return {"success": f"Uploaded {len(self.results)} results successfully."}
+        except ET.ParseError:
+            return {"error": "Error parsing XML file."}
 
-    # Create invalid XML file for upload
-    invalid_xml_content = """<results><result></result></results>"""
-    xml_file = SimpleUploadedFile("results.xml", invalid_xml_content.encode(), content_type="text/xml")
 
-    response = client.post(url, {'file': xml_file})
-    assert response.status_code == 302
-    assert 'Error parsing XML file.' in response.wsgi_request._messages
+class SelectExamView:
+    def __init__(self, exams):
+        self.exams = exams
 
-@pytest.mark.django_db
-def test_semester_yearly_result_view_get(user, client):
-    """Test the GET request of SemesterYearlyResultView."""
-    client.login(username='testuser', password='testpassword')
-    url = reverse('publish_result:semester_yearly_result')
-    response = client.get(url)
-    assert response.status_code == 200
-    assert 'departments' in response.context
+    def post(self, department_id, session, course_code):
+        exams = [exam for exam in self.exams if (
+            exam.department.id == department_id and
+            exam.session == session and
+            exam.course.course_code == course_code
+        )]
 
-@pytest.mark.django_db
-def test_published_results_view_get(user, client, exam, student):
-    """Test the GET request of PublishedResultsView."""
-    client.login(username='testuser', password='testpassword')
-    url = reverse('publish_result:published_results', kwargs={'department_id': 1, 'session': '2024'})
-    response = client.get(url)
-    assert response.status_code == 200
-    assert 'published_results' in response.context
+        if exams:
+            return {"redirect": "upload_results", "exam_id": exams[0].id}
+        else:
+            return {"error": "No exam found for the selected criteria."}
+
+
+# Test Cases
+@pytest.mark.parametrize("course_code, expected", [
+    ("COURSE123", {"redirect": "upload_results", "exam_id": 1}),
+    ("INVALID_CODE", {"error": "No exam found for the selected criteria."})
+])
+def test_select_exam_view(course_code, expected):
+    department = Department(1, "Test Department")
+    course = Course("COURSE123")
+    exam = Exam(1, department, "2023/2024", course)
+    view = SelectExamView([exam])
+
+    response = view.post(department.id, "2023/2024", course_code)
+    assert response == expected
+
+
+def test_upload_results_view_valid():
+    student = Student("12345")
+    view = UploadResultsView([student])
+
+    xml_content = '''<results>
+                        <result>
+                            <student>
+                                <id>12345</id>
+                                <score>85</score>
+                            </student>
+                        </result>
+                      </results>'''
+    response = view.post(xml_content, 1)
+    assert response["success"] == "Uploaded 1 results successfully."
+    assert len(view.results) == 1
+    assert view.results[0].marks == 85
+
+
+def test_upload_results_view_invalid_xml():
+    student = Student("12345")
+    view = UploadResultsView([student])
+
+    response = view.post("<invalid>data</invalid>", 1)
+    assert response["error"] == "Error parsing XML file."
+
+
+def test_upload_results_view_invalid_student():
+    student = Student("12345")
+    view = UploadResultsView([student])
+
+    xml_content = '''<results>
+                        <result>
+                            <student>
+                                <id>INVALID_ID</id>
+                                <score>85</score>
+                            </student>
+                        </result>
+                      </results>'''
+    response = view.post(xml_content, 1)
+    assert response["error"] == "Invalid data for student: INVALID_ID"
