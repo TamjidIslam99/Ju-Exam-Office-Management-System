@@ -1,8 +1,26 @@
-{% extends 'Exam_Office/base.html' %}
+<!-- view_result/templates/view_result/base.html -->
 
-{% block content %}
-<h2>Student Dashboard</h2>
-<ul>
-
-</ul>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Result - Exam Office System</title>
+</head>
+<body>
+    <header>
+        <h1>Exam Office Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'view_result:view_result' %}">View Result</a></li>
+                <!-- Add other navigation links as needed -->
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <footer>
+        <p>&copy; 2024 Exam Office Management System</p>
+    </footer>
+</body>
+</html>

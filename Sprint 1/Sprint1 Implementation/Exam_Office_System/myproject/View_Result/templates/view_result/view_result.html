@@ -1,0 +1,12 @@
+<!-- view_result/templates/view_result/view_result.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <h2>View Your Result</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">View Result</button>
+    </form>
+{% endblock %}

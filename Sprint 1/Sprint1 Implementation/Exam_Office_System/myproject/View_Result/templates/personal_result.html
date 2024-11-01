@@ -1,0 +1,38 @@
+<!-- view_result/templates/view_result/personal_result.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Personal Results{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Personal Results</h2>
+<p><strong>Student Name:</strong> {{ student.name }}</p>
+<p><strong>Registration Number:</strong> {{ student.registration_number }}</p>
+<p><strong>Exam Type:</strong> {{ exam_type }}</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Course Code</th>
+            <th>Course Title</th>
+            <th>Marks</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+            <tr>
+                <td>{{ result.exam.course.course_code }}</td>
+                <td>{{ result.exam.course.course_title }}</td>
+                <td>{{ result.marks }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3">No results found for the given criteria.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="#" onclick="window.print();" class="btn btn-primary">Print Results</a>
+<a href="{% url 'view_result:personal_result' %}" class="btn btn-secondary">Back</a>
+{% endblock %}
