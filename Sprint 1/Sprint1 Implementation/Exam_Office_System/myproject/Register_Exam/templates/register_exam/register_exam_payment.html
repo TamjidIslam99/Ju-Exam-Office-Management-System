@@ -1,0 +1,20 @@
+<!-- Register_Exam/templates/register_exam/register_exam_payment.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Payment Method</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label"><strong>Payment Method:</strong></label>
+            {{ form.payment_method }}
+            {% if form.payment_method.errors %}
+                <div class="text-danger">
+                    {{ form.payment_method.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Payment</button>
+    </form>
+{% endblock %}

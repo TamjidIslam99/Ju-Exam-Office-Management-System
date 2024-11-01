@@ -1,0 +1,38 @@
+<!-- Register_Exam/templates/register_exam/register_exam_confirm.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Confirm Registration Details</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label"><strong>Exam:</strong></label>
+            <p>{{ exam.course.course_code }} - {{ exam.course.course_title }} on {{ exam.exam_date }}</p>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Registration Type:</strong></label>
+            <p>{{ registration_type }}</p>
+        </div>
+        <hr>
+        <h4>Student Information</h4>
+        <div class="mb-3">
+            <label class="form-label"><strong>Name:</strong></label>
+            <p>{{ student.name }}</p>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Registration Number:</strong></label>
+            <p>{{ student.registration_number }}</p>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Session:</strong></label>
+            <p>{{ student.session }}</p>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Department:</strong></label>
+            <p>{{ student.department.name }}</p>
+        </div>
+        <button type="submit" class="btn btn-success">Confirm and Proceed to Payment</button>
+        <a href="{% url 'register_exam:register_exam' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

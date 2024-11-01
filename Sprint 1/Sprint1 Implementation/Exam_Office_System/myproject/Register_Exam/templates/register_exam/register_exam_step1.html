@@ -1,0 +1,29 @@
+<!-- Register_Exam/templates/register_exam/register_exam_step1.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Register for Upcoming Exam</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label"><strong>Select Exam:</strong></label>
+            {{ form.exams }}
+            {% if form.exams.errors %}
+                <div class="text-danger">
+                    {{ form.exams.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Registration Type:</strong></label>
+            {{ form.registration_type }}
+            {% if form.registration_type.errors %}
+                <div class="text-danger">
+                    {{ form.registration_type.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Proceed</button>
+    </form>
+{% endblock %}

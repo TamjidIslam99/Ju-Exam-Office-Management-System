@@ -1,0 +1,43 @@
+<!-- Register_Exam/templates/register_exam/register_exam.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Register for Upcoming Exam</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label"><strong>Select Exams:</strong></label>
+            {% for checkbox in form.exams %}
+                <div class="form-check">
+                    {{ checkbox.tag }}
+                    {{ checkbox.choice_label }}
+                </div>
+            {% endfor %}
+            {% if form.exams.errors %}
+                <div class="text-danger">
+                    {{ form.exams.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Registration Type:</strong></label>
+            {{ form.registration_type }}
+            {% if form.registration_type.errors %}
+                <div class="text-danger">
+                    {{ form.registration_type.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <!-- <div class="mb-3">
+            <label for="{{ form.payment_method.id_for_label }}" class="form-label"><strong>Payment Method:</strong></label>
+            {{ form.payment_method }}
+            {% if form.payment_method.errors %}
+                <div class="text-danger">
+                    {{ form.payment_method.errors }}
+                </div>
+            {% endif %}
+        </div> -->
+        <button type="submit" class="btn btn-primary">Register Exam</button>
+    </form>
+{% endblock %}

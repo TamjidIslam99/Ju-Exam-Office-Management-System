@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Exam_Office_System',
     'Authentication',
+    'Register_Exam.apps.RegisterExamConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -69,6 +71,11 @@ TEMPLATES = [
         },
     },
 ]
+# myproject/settings.py
+
+LOGIN_URL = '/auth/login/'                # Redirect to this URL for login
+LOGIN_REDIRECT_URL = '/auth/dashboard/'   # Redirect after successful login
+LOGOUT_REDIRECT_URL = '/auth/login/'      # Redirect after logout
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
