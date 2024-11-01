@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ApplyForMarksheet.views &#8212; Exam_Office_Doc 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=c058f7c8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for ApplyForMarksheet.views</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ApplyForMarksheet/views.py</span>
+
+<span class="sd">This module contains Django views for handling the marksheet application process by students.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">messages</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">ExamSelectionForm</span><span class="p">,</span> <span class="n">PaymentForm</span>
+<span class="kn">from</span> <span class="nn">Exam_Office_System.models</span> <span class="kn">import</span> <span class="n">MarksheetApplication</span><span class="p">,</span> <span class="n">Exam</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+
+<div class="viewcode-block" id="apply_marksheet">
+<a class="viewcode-back" href="../../views.html#ApplyForMarksheet.views.apply_marksheet">[docs]</a>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">apply_marksheet</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the initial marksheet application by a student.</span>
+
+<span class="sd">    This view allows a logged-in student to select an exam for which they want to apply for a marksheet.</span>
+<span class="sd">    It presents a form to select the exam and registration type, validates the input, and stores the</span>
+<span class="sd">    selected exam and registration type in the session before redirecting to the confirmation page.</span>
+
+<span class="sd">    :param request: HttpRequest - The incoming HTTP request.</span>
+<span class="sd">    :return: HttpResponse - The rendered template or a redirect response.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
+    <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">!=</span> <span class="s1">&#39;Student&#39;</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Only students can apply for marksheets.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">)</span>  <span class="c1"># Adjust namespace as per your project</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">student</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">student_profile</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Student profile not found.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">ExamSelectionForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="c1"># Get selected data</span>
+            <span class="n">exam</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;exam&#39;</span><span class="p">]</span>
+
+            <span class="c1"># Store data in session</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;exam_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exam</span><span class="o">.</span><span class="n">id</span>
+
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;apply_marksheet:confirm_marksheet&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">ExamSelectionForm</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;marksheet/apply_marksheet.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="confirm_marksheet">
+<a class="viewcode-back" href="../../views.html#ApplyForMarksheet.views.confirm_marksheet">[docs]</a>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">confirm_marksheet</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the confirmation and payment process for a marksheet application.</span>
+
+<span class="sd">    This view retrieves the selected exam and registration type from the session, displays a payment form,</span>
+<span class="sd">    verifies the student&#39;s eligibility, processes the payment, and creates a MarksheetApplication record</span>
+<span class="sd">    upon successful payment. It also handles various error scenarios and provides appropriate feedback</span>
+<span class="sd">    to the user.</span>
+
+<span class="sd">    :param request: HttpRequest - The incoming HTTP request.</span>
+<span class="sd">    :return: HttpResponse - The rendered template or a redirect response.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
+    <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">!=</span> <span class="s1">&#39;Student&#39;</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Only students can apply for marksheets.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">student</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">student_profile</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Student profile not found.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">)</span>
+
+    <span class="n">exam_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;exam_id&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exam_id</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Incomplete registration data.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;apply_marksheet:apply_marksheet&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">exam</span> <span class="o">=</span> <span class="n">Exam</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">exam_id</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Exam</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Selected exam does not exist.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;apply_marksheet:apply_marksheet&#39;</span><span class="p">)</span>
+
+    <span class="n">success_message</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Initialize success message</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">PaymentForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">payment_method</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;payment_method&#39;</span><span class="p">]</span>
+
+            <span class="c1"># Perform eligibility check</span>
+            <span class="n">verification_passed</span><span class="p">,</span> <span class="n">ineligibility_reasons</span> <span class="o">=</span> <span class="n">verify_student_eligibility</span><span class="p">(</span><span class="n">student</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">verification_passed</span><span class="p">:</span>
+                <span class="c1"># Handle payment</span>
+                <span class="n">payment_success</span> <span class="o">=</span> <span class="n">handle_payment</span><span class="p">(</span><span class="n">payment_method</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">payment_success</span><span class="p">:</span>
+                    <span class="c1"># Create MarksheetApplication</span>
+                    <span class="n">application</span> <span class="o">=</span> <span class="n">MarksheetApplication</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                        <span class="n">student</span><span class="o">=</span><span class="n">student</span><span class="p">,</span>
+                        <span class="n">exam</span><span class="o">=</span><span class="n">exam</span><span class="p">,</span>
+                        <span class="n">payment_method</span><span class="o">=</span><span class="n">payment_method</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="s1">&#39;Verified&#39;</span><span class="p">,</span>
+                        <span class="n">payment_status</span><span class="o">=</span><span class="s1">&#39;Completed&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                    <span class="c1"># Clear session data</span>
+                    <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+                    <span class="c1"># Set success message</span>
+                    <span class="n">success_message</span> <span class="o">=</span> <span class="s1">&#39;Your application has been recorded. You can collect your marksheet after three days from the exam office.&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Payment failed</span>
+                    <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Payment unsuccessful. Please try again.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Verification failed</span>
+                <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Registration rejected: </span><span class="si">{</span><span class="n">ineligibility_reasons</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">PaymentForm</span><span class="p">()</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;student&#39;</span><span class="p">:</span> <span class="n">student</span><span class="p">,</span>
+        <span class="s1">&#39;exam&#39;</span><span class="p">:</span> <span class="n">exam</span><span class="p">,</span>
+        <span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+        <span class="s1">&#39;success_message&#39;</span><span class="p">:</span> <span class="n">success_message</span><span class="p">,</span>  <span class="c1"># Pass success message to template</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;marksheet/confirm_marksheet.html&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Helper Functions</span>
+
+<div class="viewcode-block" id="verify_student_eligibility">
+<a class="viewcode-back" href="../../views.html#ApplyForMarksheet.views.verify_student_eligibility">[docs]</a>
+<span class="k">def</span> <span class="nf">verify_student_eligibility</span><span class="p">(</span><span class="n">student</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Verifies if the student is eligible to apply for a marksheet.</span>
+
+<span class="sd">    This function checks various conditions such as hall clearance, library clearance,</span>
+<span class="sd">    and expulsion status to determine the student&#39;s eligibility. It aggregates any</span>
+<span class="sd">    ineligibility reasons and returns a tuple indicating the verification status</span>
+<span class="sd">    and the reasons for ineligibility, if any.</span>
+
+<span class="sd">    :param student: Student - The student instance to verify.</span>
+<span class="sd">    :return: tuple(bool, str) - A tuple containing a boolean indicating if the verification</span>
+<span class="sd">             passed and a string with reasons for ineligibility.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Check Hall Clearance</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">student</span><span class="o">.</span><span class="n">hall_clearance</span><span class="p">:</span>
+        <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Hall clearance not obtained.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check Library Clearance</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">student</span><span class="o">.</span><span class="n">library_clearance</span><span class="p">:</span>
+        <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Library clearance not obtained.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check Expulsion Status</span>
+    <span class="k">if</span> <span class="n">student</span><span class="o">.</span><span class="n">expelled</span><span class="p">:</span>
+        <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Student has been expelled from the university.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">reasons</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reasons</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="handle_payment">
+<a class="viewcode-back" href="../../views.html#ApplyForMarksheet.views.handle_payment">[docs]</a>
+<span class="k">def</span> <span class="nf">handle_payment</span><span class="p">(</span><span class="n">payment_method</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the payment process for the marksheet application.</span>
+
+<span class="sd">    This is a mock function simulating payment processing. In a real-world scenario,</span>
+<span class="sd">    this function should integrate with an actual payment gateway to process the payment.</span>
+<span class="sd">    For demonstration purposes, it assumes that the payment is always successful.</span>
+
+<span class="sd">    :param payment_method: str - The method of payment chosen by the student.</span>
+<span class="sd">    :return: bool - Returns True if payment is successful, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Mock payment processing</span>
+    <span class="c1"># Replace this with actual payment gateway integration</span>
+    <span class="c1"># For demonstration, we&#39;ll assume payment is always successful</span>
+    <span class="c1"># To simulate failure, you can randomly return False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Exam_Office_Doc</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Your Project Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">Your Project Views</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Tamjid.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.0.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

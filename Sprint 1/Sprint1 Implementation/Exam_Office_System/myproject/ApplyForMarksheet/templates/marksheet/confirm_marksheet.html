@@ -1,0 +1,59 @@
+<!-- ApplyForMarksheet/templates/marksheet/confirm_marksheet.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="card shadow">
+            {% if success_message %}
+                <div class="card-header bg-success text-white">
+                    <h4>Application Successful!</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p>{{ success_message }}</p>
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3">Go to Dashboard</a>
+                </div>
+            {% else %}
+                <div class="card-header bg-info text-white">
+                    <h4>Confirm Your Application</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Display Exam and Student Information -->
+                    <div class="mb-4">
+                        <h5>Exam Details</h5>
+                        <p><strong>Course Code:</strong> {{ exam.course.course_code }}</p>
+                        <p><strong>Course Title:</strong> {{ exam.course.course_title }}</p>
+                        <p><strong>Exam Date:</strong> {{ exam.exam_date }}</p>
+                    </div>
+                    <hr>
+                    <div class="mb-4">
+                        <h5>Student Information</h5>
+                        <p><strong>Name:</strong> {{ student.name }}</p>
+                        <p><strong>Registration Number:</strong> {{ student.registration_number }}</p>
+                        <p><strong>Session:</strong> {{ student.session }}</p>
+                        <p><strong>Department:</strong> {{ student.department.name }}</p>
+                    </div>
+                    <hr>
+                    <!-- Payment Method Selection -->
+                    <div class="mb-4">
+                        <h5>Select Payment Method</h5>
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Payment Method:</strong></label>
+                                {{ form.payment_method }}
+                                {% if form.payment_method.errors %}
+                                    <div class="text-danger">
+                                        {{ form.payment_method.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="btn btn-success">Submit Application</button>
+                            <a href="{% url 'apply_marksheet:apply_marksheet' %}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
