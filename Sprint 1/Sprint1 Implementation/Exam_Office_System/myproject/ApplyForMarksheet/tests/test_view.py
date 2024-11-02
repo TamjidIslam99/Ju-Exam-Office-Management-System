@@ -65,6 +65,41 @@ def test_apply_marksheet_view_access(client, student_user):
     # Check that the page loads successfully
     assert response.status_code == 200
     assert 'Select Exam for Marksheet Application' in response.content.decode()
+
+@pytest.mark.django_db
+def test_confirm_marksheet_incomplete_data(client, student_user):
+    """
+    Test confirm_marksheet when session data is incomplete (no exam_id).
+    """
+    client.force_login(student_user)
+    url = reverse('apply_marksheet:confirm_marksheet')
+
+    # Access confirm_marksheet without exam_id in session
+    response = client.get(url)
+
+    # Check for error message and redirect back to apply_marksheet
+    messages = list(get_messages(response.wsgi_request))
+    assert any("Incomplete registration data." in str(message) for message in messages)
+    assert response.status_code == 302
+    assert response.url == reverse('apply_marksheet:apply_marksheet')
+
+
+    
+def test_confirm_marksheet_ineligible_student(client,student_user,exam):
+        # Store exam_id in session
+        session = self.client.session
+        session['exam_id'] = 1  # Assume an exam with ID 1 exists for simplicity
+        session.save()
+
+        response = self.client.post(reverse('apply_marksheet:confirm_marksheet'))
+
+        # Check for the ineligibility messages
+        messages = list(response.context['messages'])
+        error_messages = [str(message) for message in messages]
+        
+        # Assertions to check for both Hall and Library clearance messages
+        self.assertIn("Hall clearance not obtained.", error_messages)
+        self.assertIn("Library clearance not obtained.", error_messages)
 # @pytest.mark.django_db
 # def test_apply_marksheet_non_student_redirect(client, non_student_user):
 #     """

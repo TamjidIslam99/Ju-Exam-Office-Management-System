@@ -41,8 +41,8 @@
 <span class="sig-prename descclassname"><span class="pre">ApplyForMarksheet.views.</span></span><span class="sig-name descname"><span class="pre">apply_marksheet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ApplyForMarksheet/views.html#apply_marksheet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ApplyForMarksheet.views.apply_marksheet" title="Link to this definition">¶</a></dt>
 <dd><p>Handles the initial marksheet application by a student.</p>
 <p>This view allows a logged-in student to select an exam for which they want to apply for a marksheet.
-It presents a form to select the exam and registration type, validates the input, and stores the
-selected exam and registration type in the session before redirecting to the confirmation page.</p>
+It presents a form to select the exam , validates the input, and stores the
+selected exam in the session before redirecting to the confirmation page.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>request</strong> – HttpRequest - The incoming HTTP request.</p>
@@ -57,7 +57,7 @@ selected exam and registration type in the session before redirecting to the con
 <dt class="sig sig-object py" id="ApplyForMarksheet.views.confirm_marksheet">
 <span class="sig-prename descclassname"><span class="pre">ApplyForMarksheet.views.</span></span><span class="sig-name descname"><span class="pre">confirm_marksheet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ApplyForMarksheet/views.html#confirm_marksheet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ApplyForMarksheet.views.confirm_marksheet" title="Link to this definition">¶</a></dt>
 <dd><p>Handles the confirmation and payment process for a marksheet application.</p>
-<p>This view retrieves the selected exam and registration type from the session, displays a payment form,
+<p>This view retrieves the selected exam from the session, displays a payment form,
 verifies the student’s eligibility, processes the payment, and creates a MarksheetApplication record
 upon successful payment. It also handles various error scenarios and provides appropriate feedback
 to the user.</p>

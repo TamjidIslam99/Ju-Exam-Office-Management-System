@@ -19,6 +19,13 @@ import uuid
 # Registration Views
 
 class ExamOfficeRegisterView(View):
+    """
+    View for handling registration of Exam Office users.
+
+    GET: Renders the registration form for Exam Office users.
+    POST: Validates and processes the registration form.
+    On success, saves the user and redirects to login page.
+    """
     def get(self, request):
         user_form = UserForm()
         profile_form = ExamOfficeRegisterForm()
@@ -45,6 +52,13 @@ class ExamOfficeRegisterView(View):
         })
 
 class StudentRegisterView(View):
+    """
+    View for handling registration of Student users.
+
+    GET: Renders the registration form for students.
+    POST: Validates and processes the registration form.
+    On success, saves the user and redirects to login page.
+    """
     def get(self, request):
         user_form = UserForm()
         profile_form = StudentRegisterForm()
@@ -71,6 +85,13 @@ class StudentRegisterView(View):
         })
 
 class TeacherRegisterView(View):
+    """
+    View for handling registration of Teacher users.
+
+    GET: Renders the registration form for teachers.
+    POST: Validates and processes the registration form.
+    On success, saves the user and redirects to login page.
+    """
     def get(self, request):
         user_form = UserForm()
         profile_form = TeacherRegisterForm()
@@ -97,6 +118,13 @@ class TeacherRegisterView(View):
         })
 
 class DepartmentRegisterView(View):
+    """
+    View for handling registration of Department users.
+
+    GET: Renders the registration form for departments.
+    POST: Validates and processes the registration form.
+    On success, saves the user and redirects to login page.
+    """
     def get(self, request):
         user_form = UserForm()
         profile_form = DepartmentRegisterForm()
@@ -124,6 +152,13 @@ class DepartmentRegisterView(View):
 
 # Login View
 class CustomLoginView(View):
+    """
+    View for handling user login.
+
+    GET: Renders the login form.
+    POST: Authenticates the user. On successful login, redirects to dashboard.
+    On failure, shows error message and renders login page again.
+    """
     def get(self, request):
         form = CustomAuthenticationForm()
         return render(request, 'Exam_Office/login.html', {'form': form})
@@ -140,12 +175,24 @@ class CustomLoginView(View):
 
 # Logout View
 def logout_view(request):
+    """
+    Logs out the user and redirects to login page.
+    """
     logout(request)
     return redirect('login')
 
 # Dashboard View
 @login_required
 def dashboard(request):
+    """
+    Renders the appropriate dashboard based on user role.
+
+    Exam Office: Renders exam office dashboard.
+    Student: Renders student dashboard.
+    Teacher: Renders teacher dashboard.
+    Department: Renders department dashboard.
+    Default: Renders a general dashboard.
+    """
     user = request.user
     if user.role == 'Exam_Office':
         return render(request, 'Exam_Office/exam_office_dashboard.html')

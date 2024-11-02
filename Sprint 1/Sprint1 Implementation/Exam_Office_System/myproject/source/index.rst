@@ -17,5 +17,6 @@ documentation for details.
 
    models
    views
+   reg_log_views
 
 

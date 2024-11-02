@@ -18,8 +18,8 @@ def apply_marksheet(request):
     Handles the initial marksheet application by a student.
 
     This view allows a logged-in student to select an exam for which they want to apply for a marksheet.
-    It presents a form to select the exam and registration type, validates the input, and stores the
-    selected exam and registration type in the session before redirecting to the confirmation page.
+    It presents a form to select the exam , validates the input, and stores the
+    selected exam in the session before redirecting to the confirmation page.
 
     :param request: HttpRequest - The incoming HTTP request.
     :return: HttpResponse - The rendered template or a redirect response.
@@ -56,7 +56,7 @@ def confirm_marksheet(request):
     """
     Handles the confirmation and payment process for a marksheet application.
 
-    This view retrieves the selected exam and registration type from the session, displays a payment form,
+    This view retrieves the selected exam from the session, displays a payment form,
     verifies the student's eligibility, processes the payment, and creates a MarksheetApplication record
     upon successful payment. It also handles various error scenarios and provides appropriate feedback
     to the user.

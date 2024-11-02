@@ -10,10 +10,15 @@ from django.forms import ModelForm
 # Base User Registration Form
 class UserForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+    
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
 
 # Exam Office Registration Form
 class ExamOfficeRegisterForm(forms.ModelForm):
@@ -31,7 +36,11 @@ class StudentRegisterForm(forms.ModelForm):
             'session',
             'name',
         ]
-
+    
+    def __init__(self, *args, **kwargs):
+        super(StudentRegisterForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})  # Add Bootstrap form-control class
 # Teacher Registration Form
 class TeacherRegisterForm(forms.ModelForm):
     class Meta:
@@ -64,5 +73,18 @@ class DepartmentUserRegisterForm(forms.Form):
 
 # Custom Authentication Form (Optional Enhancement)
 class CustomAuthenticationForm(AuthenticationForm):
-    username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'placeholder': 'Username'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), required=True)
+    username = forms.CharField(
+        max_length=150,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Username',
+            'class': 'form-control'  # Add Bootstrap class
+        })
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Password',
+            'class': 'form-control'  # Add Bootstrap class
+        }),
+        required=True
+    )
