@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Exam_Office_System',
     'Authentication',
+    'Exam_Schedule',
+
 ]
 
 MIDDLEWARE = [
