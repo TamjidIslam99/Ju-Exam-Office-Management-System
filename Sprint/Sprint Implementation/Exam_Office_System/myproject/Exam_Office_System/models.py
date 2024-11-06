@@ -106,14 +106,14 @@ class Exam(models.Model):
     batch = models.CharField(max_length=50)
     session = models.CharField(max_length=50)
     exam_date = models.DateField()
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='exams')
-    invigilator = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, related_name='invigilated_exams')
-    examiner1 = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, related_name='exam1_exams')
-    examiner2 = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, related_name='exam2_exams')
-    examiner3 = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, related_name='exam3_exams')
-    question_creator = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, related_name='question_created_exams')
-    moderator = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, related_name='moderated_exams')
-    translator = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, related_name='translated_exams')
+    courses = models.ManyToManyField(Course, related_name='exams')
+    invigilator = models.ManyToManyField(Teacher, related_name='invigilated_exams')
+    examiner1 = models.ManyToManyField(Teacher,   related_name='exam1_exams')
+    examiner2 = models.ManyToManyField(Teacher,  related_name='exam2_exams')
+    examiner3 = models.ManyToManyField(Teacher, related_name='exam3_exams')
+    question_creator = models.ManyToManyField(Teacher, related_name='question_created_exams')
+    moderator = models.ManyToManyField(Teacher,  related_name='moderated_exams')
+    translator = models.ManyToManyField(Teacher, related_name='translated_exams')
 
     def __str__(self):
         return f"Exam {self.id} for {self.course.course_code} on {self.exam_date}"
