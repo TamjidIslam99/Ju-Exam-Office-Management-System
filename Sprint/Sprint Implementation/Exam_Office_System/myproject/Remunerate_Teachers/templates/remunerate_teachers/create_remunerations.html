@@ -1,0 +1,23 @@
+<!-- Remunerate_Teachers/templates/remunerate_teachers/create_remunerations.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Remuneration</title>
+</head>
+<body>
+    <h1>Create Remuneration</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
