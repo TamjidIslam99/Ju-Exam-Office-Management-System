@@ -100,6 +100,8 @@ def test_confirm_marksheet_ineligible_student(client,student_user,exam):
         # Assertions to check for both Hall and Library clearance messages
         self.assertIn("Hall clearance not obtained.", error_messages)
         self.assertIn("Library clearance not obtained.", error_messages)
+
+
 # @pytest.mark.django_db
 # def test_apply_marksheet_non_student_redirect(client, non_student_user):
 #     """
