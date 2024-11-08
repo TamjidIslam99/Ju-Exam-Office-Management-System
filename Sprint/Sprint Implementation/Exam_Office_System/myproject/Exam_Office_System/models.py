@@ -309,3 +309,11 @@ class Attendance(models.Model):
             return f"Attendance {self.id} - {self.student.name} as {self.role} on {self.attendance_date}"
         else:
             return f"Attendance {self.id} - {self.teacher.name} as {self.role} on {self.attendance_date}"
+
+
+class Sickbed(models.Model):
+
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='sick_student', null=True, blank=True)
+    reason = models.TextField()
+
+
