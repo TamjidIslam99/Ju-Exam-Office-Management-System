@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     User, Department, Student, Teacher, ExamOfficeOrAdmin, Course, Exam,
     ExamSchedule, ExamRegistration, Result, MarksheetApplication,
-    CertificateApplication, TeacherRemuneration, ExamMaterials, Attendance
+    CertificateApplication, TeacherRemuneration, ExamMaterials,StudentAttendance,TeacherAttendance,Attendance
 )
 
 admin.site.register(User)
@@ -19,4 +19,7 @@ admin.site.register(MarksheetApplication)
 admin.site.register(CertificateApplication)
 admin.site.register(TeacherRemuneration)
 admin.site.register(ExamMaterials)
+admin.site.register(StudentAttendance)
+admin.site.register(TeacherAttendance)
 admin.site.register(Attendance)
+

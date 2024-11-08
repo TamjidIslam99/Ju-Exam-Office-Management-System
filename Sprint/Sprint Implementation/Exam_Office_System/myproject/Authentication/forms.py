@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from Exam_Office_System.models import (
     User, Department, Student, Teacher, ExamOfficeOrAdmin, Course, Exam,
     ExamSchedule, ExamRegistration, Result, MarksheetApplication,
-    CertificateApplication, TeacherRemuneration, ExamMaterials, Attendance
+    CertificateApplication, TeacherRemuneration, ExamMaterials,StudentAttendance,TeacherAttendance,Attendance
 )
 from django.forms import ModelForm
 

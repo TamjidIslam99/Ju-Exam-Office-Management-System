@@ -1,0 +1,43 @@
+{% extends 'Exam_Office/base.html' %}
+
+
+{% block content %}
+  <h1>Record Attendance</h1>
+
+  <!-- Display success or error messages -->
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="alert alert-info">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Attendance Form -->
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      <label for="{{ form.exam.id_for_label }}">Exam:</label>
+      {{ form.exam }}
+    </div>
+
+    <div>
+      <label for="{{ form.attendance_date.id_for_label }}">Attendance Date:</label>
+      {{ form.attendance_date }}
+    </div>
+
+    <div>
+      <label for="{{ form.students.id_for_label }}">Students:</label>
+      {{ form.students }}
+    </div>
+
+    <div>
+      <label for="{{ form.teachers.id_for_label }}">Teachers:</label>
+      {{ form.teachers }}
+    </div>
+
+    <button type="submit">Record Attendance</button>
+  </form>
+{% endblock %}

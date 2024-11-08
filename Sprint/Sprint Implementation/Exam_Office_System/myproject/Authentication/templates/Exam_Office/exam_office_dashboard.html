@@ -3,7 +3,18 @@
 {% block content %}
 <h2>Exam Office Dashboard</h2>
 <ul>
-    <li><a href="{% url 'publish_exam_schedule' %}">Publish Exam Schedule</a></li>
-    <!-- Add more Exam Office-specific links here -->
+
+    <li><a href="{% url 'exam:record_attendance' %}">Record Attendance</a></li>
+</ul>
+
+<h3>Attendance Records</h3>
+<ul>
+    {% for attendance in attendances %}
+        <li>
+            <a href="{% url 'exam:attendance_statistics' attendance_id=attendance.id %}">
+                View Attendance Statistics for {{ attendance.exam }} on {{ attendance.attendance_date }}
+            </a>
+        </li>
+    {% endfor %}
 </ul>
 {% endblock %}

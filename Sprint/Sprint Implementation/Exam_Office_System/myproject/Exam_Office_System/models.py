@@ -107,16 +107,13 @@ class Exam(models.Model):
     session = models.CharField(max_length=50)
     exam_date = models.DateField()
     courses = models.ManyToManyField(Course, related_name='exams')
-    invigilator = models.ManyToManyField(Teacher, related_name='invigilated_exams')
-    examiner1 = models.ManyToManyField(Teacher,   related_name='exam1_exams')
-    examiner2 = models.ManyToManyField(Teacher,  related_name='exam2_exams')
-    examiner3 = models.ManyToManyField(Teacher, related_name='exam3_exams')
-    question_creator = models.ManyToManyField(Teacher, related_name='question_created_exams')
-    moderator = models.ManyToManyField(Teacher,  related_name='moderated_exams')
-    translator = models.ManyToManyField(Teacher, related_name='translated_exams')
-
-    def __str__(self):
-        return f"Exam {self.id} for {self.course.course_code} on {self.exam_date}"
+    invigilator = models.ManyToManyField(Teacher, related_name='invigilated_exams',blank=True)
+    examiner1 = models.ManyToManyField(Teacher,   related_name='exam1_exams',blank=True)
+    examiner2 = models.ManyToManyField(Teacher,  related_name='exam2_exams',blank=True)
+    examiner3 = models.ManyToManyField(Teacher, related_name='exam3_exams',blank=True)
+    question_creator = models.ManyToManyField(Teacher, related_name='question_created_exams',blank=True)
+    moderator = models.ManyToManyField(Teacher,  related_name='moderated_exams',blank=True)
+    translator = models.ManyToManyField(Teacher, related_name='translated_exams',blank=True)
 
 # Exam Schedule Model
 class ExamSchedule(models.Model):
@@ -292,20 +289,54 @@ class ExamMaterials(models.Model):
         return f"{self.material_type} for {self.exam}"
 
 # Attendance Model
+
+class StudentAttendance(models.Model):
+    attendance = models.ForeignKey('Attendance', on_delete=models.CASCADE, related_name='student_attendance_records')
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='attendance_records')
+    is_present = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.student.name} attendance on {self.attendance.attendance_date}: {'Present' if self.is_present else 'Absent'}"
+
+
+class TeacherAttendance(models.Model):
+    attendance = models.ForeignKey('Attendance', on_delete=models.CASCADE, related_name='teacher_attendance_records')
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, related_name='attendance_records')
+    is_present = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.teacher.name} attendance on {self.attendance.attendance_date}: {'Present' if self.is_present else 'Absent'}"
+
+
 class Attendance(models.Model):
     ROLE_CHOICES = [
         ('Student', 'Student'),
         ('Invigilator', 'Invigilator'),
     ]
 
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='attendances')
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='attendances', null=True, blank=True)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='attendances', null=True, blank=True)
+    exam = models.ForeignKey('Exam', on_delete=models.CASCADE, related_name='attendances')
+    student = models.ManyToManyField('Student', through=StudentAttendance, related_name='attendances', blank=True)
+    teacher = models.ManyToManyField('Teacher', through=TeacherAttendance, related_name='attendances', blank=True)
     attendance_date = models.DateField()
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+
+    def update_teachers_from_exam(self):
+        # Retrieve all teachers associated with this exam through various roles
+        associated_teachers = Teacher.objects.filter(
+            models.Q(invigilated_exams=self.exam) |
+            models.Q(exam1_exams=self.exam) |
+            models.Q(exam2_exams=self.exam) |
+            models.Q(exam3_exams=self.exam) |
+            models.Q(question_created_exams=self.exam) |
+            models.Q(moderated_exams=self.exam) |
+            models.Q(translated_exams=self.exam)
+        ).distinct()
+        
+        # Update the 'teacher' field with these associated teachers
+        self.teacher.set(associated_teachers)
 
     def __str__(self):
-        if self.role == 'Student':
-            return f"Attendance {self.id} - {self.student.name} as {self.role} on {self.attendance_date}"
-        else:
-            return f"Attendance {self.id} - {self.teacher.name} as {self.role} on {self.attendance_date}"
+        return f"Attendance record for exam on {self.attendance_date}"
+
+
+
+
