@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Exam_Office_System',
     'Authentication',
     'Publish_Result',
+    'Answer_Script_Management',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,48 @@
+{
+    "select_exam_tests": [
+        {
+            "exam_id": 1,
+            "expected_status": 200,
+            "expected_data_keys": ["id", "department", "batch", "session"]
+        },
+        {
+            "exam_id": 999,
+            "expected_status": 404,
+            "expected_data_keys": []
+        }
+    ],
+    "assign_examiners_tests": [
+        {
+            "exam_id": 1,
+            "student_id": 101,
+            "examiner_ids": [201, 202],
+            "expected_status": 200,
+            "expected_response": "Assigned"
+        },
+        {
+            "exam_id": 1,
+            "student_id": 102,
+            "examiner_ids": [203, 204],
+            "expected_status": 403,
+            "expected_response": "Already assigned"
+        }
+    ],
+    "discrepancy_flag_tests": [
+        {
+            "exam_id": 1,
+            "student_id": 101,
+            "mark_1": 60,
+            "mark_2": 85,
+            "expected_status": 200,
+            "expected_flagged": true
+        },
+        {
+            "exam_id": 1,
+            "student_id": 102,
+            "mark_1": 75,
+            "mark_2": 78,
+            "expected_status": 200,
+            "expected_flagged": false
+        }
+    ]
+}
