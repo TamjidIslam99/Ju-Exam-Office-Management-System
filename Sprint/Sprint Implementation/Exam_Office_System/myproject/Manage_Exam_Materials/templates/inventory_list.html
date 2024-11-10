@@ -1,0 +1,60 @@
+<!-- exam_management/templates/exam_management/inventory_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Material Inventory - Ju Exam Office Management System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Ju Exam Office Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'inventory_list' %}">Inventory</a></li>
+                <li><a href="{% url 'exam_materials_list' %}">Exam Materials</a></li>
+                <li><a href="{% url 'distribute_material' %}">Distribute Materials</a></li>
+                <li><a href="{% url 'distribution_log' %}">Distribution Log</a></li>
+                <li><a href="{% url 'inventory_alerts' %}">Inventory Alerts</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h2>Material Inventory</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Material Type</th>
+                    <th>Stock Quantity</th>
+                    <th>Threshold Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inventory in inventories %}
+                <tr>
+                    <td>{{ inventory.material_type }}</td>
+                    <td>{{ inventory.stock_quantity }}</td>
+                    <td>{{ inventory.threshold_quantity }}</td>
+                    <td>
+                        <a href="{% url 'edit_inventory' inventory.pk %}">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'add_inventory' %}">Add New Inventory</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ju Exam Office Management System</p>
+    </footer>
+</body>
+</html>

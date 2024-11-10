@@ -1,0 +1,58 @@
+<!-- exam_management/templates/exam_management/distribution_log.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Distribution Log - Ju Exam Office Management System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Ju Exam Office Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'inventory_list' %}">Inventory</a></li>
+                <li><a href="{% url 'exam_materials_list' %}">Exam Materials</a></li>
+                <li><a href="{% url 'distribute_material' %}">Distribute Materials</a></li>
+                <li><a href="{% url 'distribution_log' %}">Distribution Log</a></li>
+                <li><a href="{% url 'inventory_alerts' %}">Inventory Alerts</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h2>Material Distribution Log</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Exam</th>
+                    <th>Material Type</th>
+                    <th>Quantity Issued</th>
+                    <th>Distribution Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.exam }}</td>
+                    <td>{{ log.material_type }}</td>
+                    <td>{{ log.quantity_issued }}</td>
+                    <td>{{ log.distribution_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'distribute_material' %}">Distribute More Materials</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ju Exam Office Management System</p>
+    </footer>
+</body>
+</html>
