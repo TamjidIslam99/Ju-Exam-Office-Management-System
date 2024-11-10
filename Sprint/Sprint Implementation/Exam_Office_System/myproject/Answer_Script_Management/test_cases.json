@@ -1,0 +1,62 @@
+{
+    "assign_answer_script": [
+      {
+        "method": "POST",
+        "exam_id": 1,
+        "exam_course_code": "CS101",
+        "student_id": 1,
+        "student_name": "John Doe",
+        "examiner_id": 2,
+        "examiner_name": "Dr. Smith",
+        "post_data": {
+          "student_id": 1,
+          "examiner_id": 2
+        },
+        "expected_rendered_data": {
+          "exam": "CS101",
+          "students": ["John Doe"],
+          "examiners": ["Dr. Smith"]
+        }
+      }
+    ],
+    "grade_answer_script": [
+      {
+        "method": "POST",
+        "answer_script_id": 1,
+        "exam_id": 1,
+        "exam_course_code": "CS101",
+        "student_id": 1,
+        "student_name": "John Doe",
+        "examiner_id": 2,
+        "examiner_name": "Dr. Smith",
+        "grading_status": "Not Graded",
+        "post_data": {
+          "marks": "85",
+          "remarks": "Good"
+        },
+        "expected_rendered_data": {
+          "answer_script": "CS101 - John Doe"
+        }
+      }
+    ],
+    "finalize_answer_script": [
+      {
+        "method": "POST",
+        "answer_script_id": 1,
+        "exam_id": 1,
+        "exam_course_code": "CS101",
+        "student_id": 1,
+        "student_name": "John Doe",
+        "examiner_id": 2,
+        "examiner_name": "Dr. Smith",
+        "grading_status": "Graded",
+        "post_data": {
+          "total_marks": "90"
+        },
+        "expected_rendered_data": {
+          "finalized_status": "Finalized"
+        }
+      }
+    ]
+  }
+  

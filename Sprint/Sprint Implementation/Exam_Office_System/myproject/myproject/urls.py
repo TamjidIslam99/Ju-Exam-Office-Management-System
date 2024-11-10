@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('Authentication.urls')),
     path('publish_result/', include('Publish_Result.urls')),
+    path('answer_scripts/', include('Answer_Script_Management.urls')),
 ]

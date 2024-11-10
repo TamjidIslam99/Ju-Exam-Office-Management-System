@@ -1,44 +1,57 @@
 from django.db import models
-from django.contrib.auth.models import User
+from Exam_Office_System.models import Exam, Teacher, Student
+
+# Constants for grading status
+NOT_GRADED = 'Not Graded'
+GRADED = 'Graded'
+
+# Constants for discrepancy status
+PENDING = 'Pending'
+RESOLVED = 'Resolved'
 
 class AnswerScript(models.Model):
-    exam = models.ForeignKey('Exam', on_delete=models.CASCADE)
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    department = models.CharField(max_length=255)
-    session = models.CharField(max_length=255)
+    """
+    Model representing an answer script submitted by a student for an exam.
+    Includes metadata about the script file, its grading status, and examiner assignments.
+    """
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='answer_scripts')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='answer_scripts')
+    examiner = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, related_name='assigned_answer_scripts')
     script_file = models.FileField(upload_to='answer_scripts/')
-    status = models.CharField(max_length=255, default="Not Graded")
-    created_at = models.DateTimeField(auto_now_add=True)
+    grading_status = models.CharField(
+        max_length=20, choices=[(NOT_GRADED, 'Not Graded'), (GRADED, 'Graded')], default=NOT_GRADED
+    )
+    remarks = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"Answer Script for {self.student.name} - {self.exam.name}"
-class ExaminerAssignment(models.Model):
-    answer_script = models.ForeignKey(AnswerScript, on_delete=models.CASCADE)
-    first_examiner = models.ForeignKey(User, related_name='first_examiner', on_delete=models.SET_NULL, null=True)
-    second_examiner = models.ForeignKey(User, related_name='second_examiner', on_delete=models.SET_NULL, null=True)
-    third_examiner = models.ForeignKey(User, related_name='third_examiner', on_delete=models.SET_NULL, null=True)
-    
-    first_examiner_marks = models.FloatField(null=True, blank=True)
-    second_examiner_marks = models.FloatField(null=True, blank=True)
-    third_examiner_marks = models.FloatField(null=True, blank=True)
-    
-    status = models.CharField(max_length=255, default="Not Evaluated")
-    created_at = models.DateTimeField(auto_now_add=True)
+        return f"Answer Script for {self.student.name} in {self.exam.course.course_code}"
+
+class GradingDiscrepancy(models.Model):
+    """
+    Model representing grading discrepancies between different examiners for a student's answer script.
+    Tracks marks assigned by multiple examiners and the resolution status of the discrepancy.
+    """
+    answer_script = models.ForeignKey(AnswerScript, on_delete=models.CASCADE, related_name='grading_discrepancies')
+    examiner1_marks = models.IntegerField(null=True)
+    examiner2_marks = models.IntegerField(null=True)
+    examiner3_marks = models.IntegerField(null=True)
+    discrepancy_status = models.CharField(
+        max_length=20, choices=[(PENDING, 'Pending'), (RESOLVED, 'Resolved')], default=PENDING
+    )
     
     def __str__(self):
-        return f"Assignment for {self.answer_script}"
-class Discrepancy(models.Model):
-    assignment = models.ForeignKey(ExaminerAssignment, on_delete=models.CASCADE)
-    difference = models.FloatField()
-    resolved = models.BooleanField(default=False)
-    flagged_at = models.DateTimeField(auto_now_add=True)
+        return f"Discrepancy for {self.answer_script.student.name} in {self.answer_script.exam.course.course_code}"
+
+class FinalizedAnswerScript(models.Model):
+    """
+    Model representing the finalized version of an answer script, with total marks and final status.
+    This model ensures that answer scripts are marked as finalized after grading discrepancies are resolved.
+    """
+    answer_script = models.OneToOneField(AnswerScript, on_delete=models.CASCADE, related_name='finalized_script')
+    total_marks = models.IntegerField()
+    status = models.CharField(
+        max_length=20, choices=[('Finalized', 'Finalized'), ('Not Finalized', 'Not Finalized')], default='Not Finalized'
+    )
 
     def __str__(self):
-        return f"Discrepancy for {self.assignment.answer_script}"
-class EvaluationLog(models.Model):
-    examiner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    action = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Log for {self.examiner.username} at {self.timestamp}"
+        return f"Finalized script for {self.answer_script.student.name}"

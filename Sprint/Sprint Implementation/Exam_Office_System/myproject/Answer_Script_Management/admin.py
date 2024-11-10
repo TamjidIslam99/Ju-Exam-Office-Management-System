@@ -1,3 +1,7 @@
+# Answer_Script_Management/admin.py
 from django.contrib import admin
+from .models import AnswerScript, GradingDiscrepancy, FinalizedAnswerScript
 
-# Register your models here.
+admin.site.register(AnswerScript)
+admin.site.register(GradingDiscrepancy)
+admin.site.register(FinalizedAnswerScript)

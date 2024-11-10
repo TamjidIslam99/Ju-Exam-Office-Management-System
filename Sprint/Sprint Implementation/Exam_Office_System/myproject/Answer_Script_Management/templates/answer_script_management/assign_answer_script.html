@@ -1,0 +1,18 @@
+<form method="POST">
+    {% csrf_token %}
+    <label for="student_id">Student:</label>
+    <select name="student_id">
+        {% for student in students %}
+            <option value="{{ student.id }}">{{ student.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="examiner_id">Examiner:</label>
+    <select name="examiner_id">
+        {% for examiner in examiners %}
+            <option value="{{ examiner.id }}">{{ examiner.name }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Assign Answer Script</button>
+</form>
