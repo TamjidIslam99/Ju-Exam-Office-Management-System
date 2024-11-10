@@ -291,6 +291,19 @@ class ExamMaterials(models.Model):
     def __str__(self):
         return f"{self.material_type} for {self.exam}"
 
+class AccommodationRequest(models.Model):
+    
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    special_needs = models.TextField(help_text="Describe your special accommodation request (e.g. scriber, sickbed, medical aid).")
+    medical_documents = models.FileField(upload_to='medical_documents/', help_text="Upload any medical documentation supporting your request.")
+    is_approved = models.BooleanField(default=False)
+    approval_notes = models.TextField(blank=True, null=True, help_text="Approval notes from the Exam Office.")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"Request by {self.student.user.username} for {self.special_needs} - {'Approved' if self.is_approved else 'Pending'}"
+    
 # Attendance Model
 class Attendance(models.Model):
     ROLE_CHOICES = [

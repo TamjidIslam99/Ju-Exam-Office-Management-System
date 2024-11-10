@@ -1,0 +1,5 @@
+<!-- accommodation_requests/templates/accommodation_requests/accommodation_status.html -->
+<h2>Accommodation Request Status</h2>
+<p>Status: {{ accommodation_request.is_approved|yesno:"Approved,Pending" }}</p>
+<p>Special Needs: {{ accommodation_request.special_needs }}</p>
+<p>Approval Notes: {{ accommodation_request.approval_notes }}</p>

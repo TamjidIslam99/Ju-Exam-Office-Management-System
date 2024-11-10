@@ -30,7 +30,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# exam_management_system/settings.py
+
 INSTALLED_APPS = [
+    # Django default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Exam_Office_System',
     'Authentication',
+    'accommodation_requests',
 ]
+
+# exam_management_system/settings.py
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
