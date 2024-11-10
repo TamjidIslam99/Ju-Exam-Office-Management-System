@@ -125,6 +125,12 @@ def assign_answer_script(request, exam_id):
             examiner=examiner,
             grading_status=NOT_GRADED
         )
+
+        # Simulate grading completion based on some condition
+        if examiner.id % 2 == 0:  # for example, if the examiner_id is even
+            answer_script.grading_status = 'Graded'
+            answer_script.save()
+
         return redirect('assign_answer_script', exam_id=exam_id)
 
     students = Student.objects.filter(examregistration__exams=exam)
