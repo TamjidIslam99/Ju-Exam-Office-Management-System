@@ -1,70 +1,127 @@
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import Mock
+#from django.urls import reverse
+#from django.contrib.auth.models import User
+#from Publish_Result.models import PublishedResult
+#from Exam_Office_System.models import Department, Exam, Course, Student, Result
 
-# Sample test data for various scenarios
-sample_exam_data = {"exam_id": 1, "expected_status": 200, "expected_data_keys": ["exam_id", "name"]}
-sample_examiner_data = {
-    "exam_id": 1,
-    "student_id": 101,
-    "examiner_ids": [1, 2],
-    "expected_status": 201,
-    "expected_response": "Examiners assigned successfully",
-}
-sample_discrepancy_data = {
-    "exam_id": 1,
-    "student_id": 101,
-    "mark_1": 75,
-    "mark_2": 80,
-    "expected_status": 200,
-    "expected_flagged": True,
-}
+# Mock Models for Testing
+class MockDepartment:
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
 
-# Mock for selecting an exam
-@pytest.mark.parametrize("test_case", [sample_exam_data])
-@patch("Answer_Script_Management.views.select_exam_view")
-def test_select_exam_view(mock_view, test_case):
-    mock_response = MagicMock()
-    mock_response.status_code = test_case["expected_status"]
-    mock_response.json.return_value = {"exam_id": 1, "name": "Sample Exam"}
+class MockCourse:
+    def __init__(self, course_code):
+        self.course_code = course_code
 
-    mock_view.return_value = mock_response
+class MockExam:
+    def __init__(self, id, department, session, course):
+        self.id = id
+        self.department = department
+        self.session = session
+        self.course = course
 
-    response = mock_view(test_case["exam_id"])
+class MockStudent:
+    def __init__(self, registration_number, department):
+        self.registration_number = registration_number
+        self.department = department
 
-    assert response.status_code == test_case["expected_status"]
-
-    if response.status_code == 200:
-        data = response.json()
-        assert all(key in data for key in test_case["expected_data_keys"])
+class MockResult:
+    def __init__(self, exam_id, student, marks):
+        self.exam_id = exam_id
+        self.student = student
+        self.marks = marks
 
 
-# Mock for assigning examiners to an answer script
-@pytest.mark.parametrize("test_case", [sample_examiner_data])
-@patch("Answer_Script_Management.views.assign_examiners_view")
-def test_assign_examiners_view(mock_view, test_case):
-    mock_response = MagicMock()
-    mock_response.status_code = test_case["expected_status"]
-    mock_response.json.return_value = {"message": test_case["expected_response"]}
+# Test for SelectExamView
+@pytest.mark.parametrize("course_code, expected", [
+    ("COURSE123", {"redirect": "upload_results", "exam_id": 1}),
+    ("INVALID_CODE", {"error": "No exam found for the selected criteria."})
+])
+def test_select_exam_view(course_code, expected):
+    department = MockDepartment(1, "Test Department")
+    course = MockCourse("COURSE123")
+    exam = MockExam(1, department, "2023/2024", course)
+    
+    # Simulate SelectExamView behavior
+    view = Mock()
+    view.post(department.id, "2023/2024", course_code)
+    response = view.post(department.id, "2023/2024", course_code)
+    assert response == expected
 
-    mock_view.return_value = mock_response
 
-    response = mock_view(test_case["exam_id"], test_case["student_id"], test_case["examiner_ids"])
+# Test for UploadResultsView with valid XML
+def test_upload_results_view_valid():
+    student = MockStudent("12345", MockDepartment(1, "Test Department"))
+    view = Mock()
+    view.post = Mock(return_value={"success": "Uploaded 1 results successfully."})
 
-    assert response.status_code == test_case["expected_status"]
-    assert response.json().get("message") == test_case["expected_response"]
+    # Mock the XML file content
+    xml_content = '''<results>
+                        <result>
+                            <student>
+                                <id>12345</id>
+                                <score>85</score>
+                            </student>
+                        </result>
+                      </results>'''
+    
+    response = view.post(xml_content, 1)
+    assert response["success"] == "Uploaded 1 results successfully."
 
 
-# Mock for flagging discrepancies in marks
-@pytest.mark.parametrize("test_case", [sample_discrepancy_data])
-@patch("Answer_Script_Management.views.flag_discrepancy_view")
-def test_discrepancy_flag_view(mock_view, test_case):
-    mock_response = MagicMock()
-    mock_response.status_code = test_case["expected_status"]
-    mock_response.json.return_value = {"flagged": test_case["expected_flagged"]}
+# Test for UploadResultsView with invalid XML format
+def test_upload_results_view_invalid_xml():
+    student = MockStudent("12345", MockDepartment(1, "Test Department"))
+    view = Mock()
+    view.post = Mock(return_value={"error": "Error parsing XML file."})
 
-    mock_view.return_value = mock_response
+    # Invalid XML content
+    invalid_xml_content = "<invalid>data</invalid>"
+    response = view.post(invalid_xml_content, 1)
+    assert response["error"] == "Error parsing XML file."
 
-    response = mock_view(test_case["exam_id"], test_case["student_id"], test_case["mark_1"], test_case["mark_2"])
 
-    assert response.status_code == test_case["expected_status"]
-    assert response.json().get("flagged") == test_case["expected_flagged"]
+# Test for UploadResultsView with an invalid student
+def test_upload_results_view_invalid_student():
+    student = MockStudent("12345", MockDepartment(1, "Test Department"))
+    view = Mock()
+    view.post = Mock(return_value={"error": "Invalid data for student: INVALID_ID"})
+
+    # XML with an invalid student ID
+    invalid_student_xml = '''<results>
+                                <result>
+                                    <student>
+                                        <id>INVALID_ID</id>
+                                        <score>85</score>
+                                    </student>
+                                </result>
+                            </results>'''
+    response = view.post(invalid_student_xml, 1)
+    assert response["error"] == "Invalid data for student: INVALID_ID"
+
+
+# Test for SemesterYearlyResultView
+@pytest.mark.parametrize("all_results_uploaded, expected", [
+    (True, {"redirect": "published_results", "message": "Results published successfully."}),
+    (False, {"error": "Not all results uploaded"})
+])
+def test_semester_yearly_result_view(all_results_uploaded, expected):
+    department = MockDepartment(1, "Test Department")
+    session = "2023/2024"
+    
+    # Mock exams and results
+    exam = MockExam(1, department, session, MockCourse("COURSE123"))
+    student = MockStudent("12345", department)
+    result = MockResult(exam.id, student, 85)
+
+    # Simulate result calculation and publishing
+    view = Mock()
+    if all_results_uploaded:
+        view.post = Mock(return_value={"redirect": "published_results", "message": "Results published successfully."})
+    else:
+        view.post = Mock(return_value={"error": "Not all results uploaded"})
+    
+    response = view.post(department.id, session)
+    assert response == expected

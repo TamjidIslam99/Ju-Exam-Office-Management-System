@@ -1,48 +1,45 @@
 {
-    "select_exam_tests": [
+    "select_exam": {
+      "exams": [
         {
-            "exam_id": 1,
-            "expected_status": 200,
-            "expected_data_keys": ["id", "department", "batch", "session"]
+          "id": 1,
+          "name": "Exam 1",
+          "session": "2024-2025",
+          "department": "Computer Science"
         },
         {
-            "exam_id": 999,
-            "expected_status": 404,
-            "expected_data_keys": []
+          "id": 2,
+          "name": "Exam 2",
+          "session": "2024-2025",
+          "department": "Electrical Engineering"
         }
-    ],
-    "assign_examiners_tests": [
+      ]
+    },
+    "assign_examiners": {
+      "script_id": 1,
+      "first_examiner": 1,
+      "second_examiner": 2,
+      "third_examiner": 3
+    },
+    "track_evaluation_status": {
+      "status": "Not Evaluated",
+      "scripts": [
         {
-            "exam_id": 1,
-            "student_id": 101,
-            "examiner_ids": [201, 202],
-            "expected_status": 200,
-            "expected_response": "Assigned"
-        },
-        {
-            "exam_id": 1,
-            "student_id": 102,
-            "examiner_ids": [203, 204],
-            "expected_status": 403,
-            "expected_response": "Already assigned"
+          "id": 1,
+          "student": "Student 1",
+          "exam": "Exam 1"
         }
-    ],
-    "discrepancy_flag_tests": [
+      ]
+    },
+    "flag_discrepancies": {
+      "discrepancies": [
         {
-            "exam_id": 1,
-            "student_id": 101,
-            "mark_1": 60,
-            "mark_2": 85,
-            "expected_status": 200,
-            "expected_flagged": true
-        },
-        {
-            "exam_id": 1,
-            "student_id": 102,
-            "mark_1": 75,
-            "mark_2": 78,
-            "expected_status": 200,
-            "expected_flagged": false
+          "script_id": 1,
+          "first_examiner_marks": 75,
+          "second_examiner_marks": 80,
+          "threshold": 5
         }
-    ]
-}
+      ]
+    }
+  }
+  
