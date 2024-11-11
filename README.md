@@ -1,16 +1,36 @@
-# Project Name
+# JU Exam Office Management System
+---
+## Team Name: JU_Hexagon
+*Batch 49, Department of Computer Science & Engineering, Jahangirnagar University, Bangladesh*
+
+## Team Members:
+- **Mohammed Tamjid Islam** 
+- **Mahfuz Anam** 
+- **Kamrul Hasan Nahid** 
+- **Farhan Ahmed Onu** 
+- **Suraiya Mahmuda** 
+- **Abdullah Al Mamun**
+# Intoduction
 
 Our Project is Exam Office Management System. We iniitially made the project predominantly for Jahangirnagar University.The primary purpose of the product is to improve the accuracy, efficiency, and transparency of examrelated processes. The software serves as a centralized platform for the exam office to manage multiple tasks,
 
 ## Features
-
-- Creating and publishing exam schedules,
-- Handling student results,
+#### Exam Office
+- Creating and publishing exam schedules
+- Publish Result
+- Manage Exam Materials
+- Manage Answer Scripts
+- Manage Teacher Remuneration
 - Approving special accommodations,
 Additionally, it provides students with a seamless interface to:
 - Access their results,
-- Apply for marksheets and certificates,
-- Register for upcoming exams.
+#### Students
+- Register for Upcoming Exams,
+- View Results,
+- Apply for Marksheets and Certificates,
+
+  
+
 
 ## Installation
 Following should be installed correctly. They are written in requirements.txt file
