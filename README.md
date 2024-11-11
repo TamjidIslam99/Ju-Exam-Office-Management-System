@@ -16,7 +16,7 @@ Our Project is Exam Office Management System. We iniitially made the project pre
 
 ## Features
 #### Exam Office
-- Creating and publishing exam schedules
+- Creating and Publishing Exam Schedules
 - Publish Result
 - Manage Exam Materials
 - Manage Answer Scripts
