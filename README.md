@@ -16,18 +16,18 @@ Our Project is Exam Office Management System. We iniitially made the project pre
 
 ## Features
 #### Exam Office
-- Creating and Publishing Exam Schedules
-- Publish Result
-- Manage Exam Materials
-- Manage Answer Scripts
-- Manage Teacher Remuneration
+- Creating and Publishing Exam Schedules,
+- Publish Result,
+- Manage Exam Materials,
+- Manage Answer Scripts,
+- Manage Teacher Remuneration,
 - Approving special accommodations,
 Additionally, it provides students with a seamless interface to:
-- Access their results,
+- Access their results
 #### Students
 - Register for Upcoming Exams,
 - View Results,
-- Apply for Marksheets and Certificates,
+- Apply for Marksheets and Certificates
 
   
 
