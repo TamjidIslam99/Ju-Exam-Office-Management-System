@@ -297,17 +297,13 @@ class StudentAttendance(models.Model):
     - `attendance`: A foreign key to the `Attendance` model, representing the specific attendance record.
     - `student`: A foreign key to the `Student` model, representing the student whose attendance is being recorded.
     - `is_present`: A boolean field indicating whether the student was present or absent.
-
-    **Methods**:
-    - `__str__`: Returns a string representation of the attendance record, indicating the student's name, attendance date, and presence status.
     """
 
     attendance = models.ForeignKey('Attendance', on_delete=models.CASCADE, related_name='student_attendance_records')
     student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='attendance_records')
     is_present = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.student.name} attendance on {self.attendance.attendance_date}: {'Present' if self.is_present else 'Absent'}"
+    
 
 
 class TeacherAttendance(models.Model):
@@ -318,17 +314,12 @@ class TeacherAttendance(models.Model):
     - `attendance`: A foreign key to the `Attendance` model, representing the specific attendance record.
     - `teacher`: A foreign key to the `Teacher` model, representing the teacher whose attendance is being recorded.
     - `is_present`: A boolean field indicating whether the teacher was present or absent.
-
-    **Methods**:
-    - `__str__`: Returns a string representation of the attendance record, indicating the teacher's name, attendance date, and presence status.
     """
 
     attendance = models.ForeignKey('Attendance', on_delete=models.CASCADE, related_name='teacher_attendance_records')
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, related_name='attendance_records')
     is_present = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.teacher.name} attendance on {self.attendance.attendance_date}: {'Present' if self.is_present else 'Absent'}"
 
 
 class Attendance(models.Model):
@@ -362,10 +353,6 @@ class Attendance(models.Model):
         
         It fetches teachers who are associated with the exam through different roles,
         such as invigilators, question creators, and moderators.
-
-        **Methods**:
-        - Retrieves teachers from different roles in the `Exam` model.
-        - Updates the `teacher` field with these associated teachers.
         """
         # Retrieve all teachers associated with this exam through various roles
         associated_teachers = Teacher.objects.filter(
@@ -380,9 +367,6 @@ class Attendance(models.Model):
 
         # Update the 'teacher' field with these associated teachers
         self.teacher.set(associated_teachers)
-
-    def __str__(self):
-        return f"Attendance record for exam on {self.attendance_date}"
 
 
 
