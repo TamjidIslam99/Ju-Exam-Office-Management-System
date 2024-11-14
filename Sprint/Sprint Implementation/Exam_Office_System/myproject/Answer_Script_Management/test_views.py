@@ -1,43 +1,34 @@
 import pytest
-from unittest.mock import patch, MagicMock
-from django.urls import reverse
+from unittest.mock import MagicMock
 
-# Mocking Django components
-@pytest.fixture
-def mock_user():
-    user_mock = MagicMock()
-    user_mock.username = 'testuser'
-    user_mock.password = 'testpass'
-    return user_mock
+# Mock classes to simulate Django models
+class MockUser :
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
-@pytest.fixture
-def mock_exam():
-    exam_mock = MagicMock()
-    exam_mock.id = 1
-    exam_mock.department_id = 1
-    exam_mock.batch = '2023'
-    exam_mock.session = '2023/2024'
-    exam_mock.exam_date = '2023-12-01'
-    exam_mock.course_id = 1
-    return exam_mock
+class MockExam:
+    def __init__(self, exam_id, department_id, batch, session, exam_date, course_id):
+        self.id = exam_id
+        self.department_id = department_id
+        self.batch = batch
+        self.session = session
+        self.exam_date = exam_date
+        self.course_id = course_id
 
-@pytest.fixture
-def mock_student():
-    student_mock = MagicMock()
-    student_mock.id = 1
-    student_mock.registration_number = 'REG123'
-    student_mock.department_id = 1
-    student_mock.session = '2023/2024'
-    student_mock.name = 'Test Student'
-    return student_mock
+class MockStudent:
+    def __init__(self, student_id, registration_number, department_id, session, name):
+        self.id = student_id
+        self.registration_number = registration_number
+        self.department_id = department_id
+        self.session = session
+        self.name = name
 
-@pytest.fixture
-def mock_answer_script(mock_exam, mock_student):
-    answer_script_mock = MagicMock()
-    answer_script_mock.id = 1
-    answer_script_mock.exam = mock_exam
-    answer_script_mock.student = mock_student
-    return answer_script_mock
+class MockAnswerScript:
+    def __init__(self, script_id, exam, student):
+        self.id = script_id
+        self.exam = exam
+        self.student = student
 
 @pytest.fixture
 def load_test_cases():
@@ -48,46 +39,50 @@ def load_test_cases():
         'finalize_management': {'POST': {'status_code': 302, 'redirect_url': '/success/'}}
     }
 
-@patch('Answer_Script_Management.views.User', autospec=True)
-def test_manage_answer_scripts(mock_user, load_test_cases):
-    mock_user.objects.create_user.return_value = mock_user
-    response = MagicMock()  # Mock response object
+def test_manage_answer_scripts(load_test_cases):
+    # Simulate response object
+    response = MagicMock()
     response.status_code = load_test_cases['manage_answer_scripts']['GET']['status_code']
     response.context = {'exams': []}  # Mock context
 
-    # Simulate view logic
     assert response.status_code == load_test_cases['manage_answer_scripts']['GET']['status_code']
     assert 'exams' in response.context
 
-@patch('Answer_Script_Management.views.Exam', autospec=True)
-@patch('Answer_Script_Management.views.Student', autospec=True)
-@patch('Answer_Script_Management.views.AnswerScript', autospec=True)
-def test_view_attendance_and_scripts(mock_exam, mock_student, mock_answer_script, load_test_cases):
-    response = MagicMock()  # Mock response object
-    response.status_code = load_test_cases['view_attendance_and_scripts']['GET']['status_code']
-    response.context = {'exam': mock_exam, 'students': [mock_student], 'answer_scripts': [mock_answer_script]}
+def test_view_attendance_and_scripts(load_test_cases):
+    mock_exam = MockExam(1, 1, '2023', '2023/2024', '2023-12-01', 1)
+    mock_student = MockStudent(1, 'REG123', 1, '2023/2024', 'Test Student')
+    mock_answer_script = MockAnswerScript(1, mock_exam, mock_student)
 
-    # Simulate view logic
+    # Simulate response object
+    response = MagicMock()
+    response.status_code = load_test_cases['view_attendance_and_scripts']['GET']['status_code']
+    response.context = {
+        'exam': mock_exam,
+        'students': [mock_student],
+        'answer_scripts': [mock_answer_script]
+    }
+
     assert response.status_code == load_test_cases['view_attendance_and_scripts']['GET']['status_code']
     assert 'exam' in response.context
     assert 'students' in response.context
     assert 'answer_scripts' in response.context
 
-@patch('Answer_Script_Management.views.AnswerScript', autospec=True)
-def test_evaluate_script(mock_answer_script, load_test_cases):
-    response = MagicMock()  # Mock response object
+def test_evaluate_script(load_test_cases):
+    mock_answer_script = MockAnswerScript(1, None, None)
+
+    # Simulate response object
+    response = MagicMock()
     response.status_code = load_test_cases['evaluate_script']['GET']['status_code']
     response.context = {'answer_script': mock_answer_script}
 
-    # Simulate view logic
     assert response.status_code == load_test_cases['evaluate_script']['GET']['status_code']
     assert 'answer_script' in response.context
 
 def test_finalize_management(load_test_cases):
-    response = MagicMock()  # Mock response object
+    # Simulate response object
+    response = MagicMock()
     response.status_code = load_test_cases['finalize_management']['POST']['status_code']
     response.url = load_test_cases['finalize_management']['POST']['redirect_url']
 
-    # Simulate view logic
     assert response.status_code == load_test_cases['finalize_management']['POST']['status_code']
     assert response.url == load_test_cases['finalize_management']['POST']['redirect_url']
