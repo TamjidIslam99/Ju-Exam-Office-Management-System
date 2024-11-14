@@ -291,50 +291,44 @@ class ExamMaterials(models.Model):
 
 class StudentAttendance(models.Model):
     """
-    Model to represent the attendance record of a student for a specific exam.
+    Represents the attendance record of a student for a specific exam.
 
-    **Fields**:
-    - `attendance`: A foreign key to the `Attendance` model, representing the specific attendance record.
-    - `student`: A foreign key to the `Student` model, representing the student whose attendance is being recorded.
-    - `is_present`: A boolean field indicating whether the student was present or absent.
+    Attributes:
+        attendance (ForeignKey): A reference to the `Attendance` model, representing the specific attendance record.
+        student (ForeignKey): A reference to the `Student` model, representing the student whose attendance is recorded.
+        is_present (BooleanField): Indicates whether the student was present (True) or absent (False).
     """
-
     attendance = models.ForeignKey('Attendance', on_delete=models.CASCADE, related_name='student_attendance_records')
     student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='attendance_records')
     is_present = models.BooleanField(default=False)
 
-    
-
 
 class TeacherAttendance(models.Model):
     """
-    Model to represent the attendance record of a teacher for a specific exam.
+    Represents the attendance record of a teacher for a specific exam.
 
-    **Fields**:
-    - `attendance`: A foreign key to the `Attendance` model, representing the specific attendance record.
-    - `teacher`: A foreign key to the `Teacher` model, representing the teacher whose attendance is being recorded.
-    - `is_present`: A boolean field indicating whether the teacher was present or absent.
+    Attributes:
+        attendance (ForeignKey): Reference to the `Attendance` model, representing the specific attendance record.
+        teacher (ForeignKey): Reference to the `Teacher` model, representing the teacher whose attendance is recorded.
+        is_present (BooleanField): Indicates whether the teacher was present (True) or absent (False).
     """
-
     attendance = models.ForeignKey('Attendance', on_delete=models.CASCADE, related_name='teacher_attendance_records')
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, related_name='attendance_records')
     is_present = models.BooleanField(default=False)
 
 
-
 class Attendance(models.Model):
     """
-    Model to represent an attendance record for an exam.
+    Represents an attendance record for an exam.
 
-    **Fields**:
-    - `exam`: A foreign key to the `Exam` model, representing the specific exam for which attendance is being recorded.
-    - `student`: A many-to-many relationship to the `Student` model through `StudentAttendance`, representing the students attending the exam.
-    - `teacher`: A many-to-many relationship to the `Teacher` model through `TeacherAttendance`, representing the teachers attending the exam.
-    - `attendance_date`: A date field representing the date of the attendance record.
+    Attributes:
+        exam (ForeignKey): A reference to the `Exam` model, representing the specific exam for which attendance is recorded.
+        student (ManyToManyField): A many-to-many relationship to the `Student` model through `StudentAttendance`, representing students attending the exam.
+        teacher (ManyToManyField): A many-to-many relationship to the `Teacher` model through `TeacherAttendance`, representing teachers attending the exam.
+        attendance_date (DateField): The date of the attendance record.
 
-    **Methods**:
-    - `update_teachers_from_exam`: This method updates the list of teachers associated with the exam based on various roles.
-    - `__str__`: Returns a string representation of the attendance record, showing the exam date.
+    Methods:
+        update_teachers_from_exam: This method updates the list of teachers associated with the exam based on roles like invigilators, question creators, and moderators.
     """
 
     ROLE_CHOICES = [
@@ -349,10 +343,10 @@ class Attendance(models.Model):
 
     def update_teachers_from_exam(self):
         """
-        Updates the list of teachers associated with this exam based on various roles.
-        
-        It fetches teachers who are associated with the exam through different roles,
-        such as invigilators, question creators, and moderators.
+        Updates the list of teachers associated with this exam.
+
+        This method fetches teachers associated with the exam in roles like invigilators, question creators,
+        and moderators, and updates the `teacher` field.
         """
         # Retrieve all teachers associated with this exam through various roles
         associated_teachers = Teacher.objects.filter(
@@ -367,8 +361,3 @@ class Attendance(models.Model):
 
         # Update the 'teacher' field with these associated teachers
         self.teacher.set(associated_teachers)
-
-
-
-
-

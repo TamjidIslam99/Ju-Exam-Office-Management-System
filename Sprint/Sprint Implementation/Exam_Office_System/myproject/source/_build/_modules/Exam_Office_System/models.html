@@ -377,23 +377,16 @@
 <a class="viewcode-back" href="../../models.html#Exam_Office_System.models.StudentAttendance">[docs]</a>
 <span class="k">class</span> <span class="nc">StudentAttendance</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Model to represent the attendance record of a student for a specific exam.</span>
+<span class="sd">    Represents the attendance record of a student for a specific exam.</span>
 
-<span class="sd">    **Fields**:</span>
-<span class="sd">    - `attendance`: A foreign key to the `Attendance` model, representing the specific attendance record.</span>
-<span class="sd">    - `student`: A foreign key to the `Student` model, representing the student whose attendance is being recorded.</span>
-<span class="sd">    - `is_present`: A boolean field indicating whether the student was present or absent.</span>
-
-<span class="sd">    **Methods**:</span>
-<span class="sd">    - `__str__`: Returns a string representation of the attendance record, indicating the student&#39;s name, attendance date, and presence status.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        attendance (ForeignKey): A reference to the `Attendance` model, representing the specific attendance record.</span>
+<span class="sd">        student (ForeignKey): A reference to the `Student` model, representing the student whose attendance is recorded.</span>
+<span class="sd">        is_present (BooleanField): Indicates whether the student was present (True) or absent (False).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="n">attendance</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;Attendance&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;student_attendance_records&#39;</span><span class="p">)</span>
     <span class="n">student</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;Student&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;attendance_records&#39;</span><span class="p">)</span>
-    <span class="n">is_present</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">student</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> attendance on </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attendance</span><span class="o">.</span><span class="n">attendance_date</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39;Present&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">is_present</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;Absent&#39;</span><span class="si">}</span><span class="s2">&quot;</span></div>
+    <span class="n">is_present</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
 
@@ -401,23 +394,16 @@
 <a class="viewcode-back" href="../../models.html#Exam_Office_System.models.TeacherAttendance">[docs]</a>
 <span class="k">class</span> <span class="nc">TeacherAttendance</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Model to represent the attendance record of a teacher for a specific exam.</span>
+<span class="sd">    Represents the attendance record of a teacher for a specific exam.</span>
 
-<span class="sd">    **Fields**:</span>
-<span class="sd">    - `attendance`: A foreign key to the `Attendance` model, representing the specific attendance record.</span>
-<span class="sd">    - `teacher`: A foreign key to the `Teacher` model, representing the teacher whose attendance is being recorded.</span>
-<span class="sd">    - `is_present`: A boolean field indicating whether the teacher was present or absent.</span>
-
-<span class="sd">    **Methods**:</span>
-<span class="sd">    - `__str__`: Returns a string representation of the attendance record, indicating the teacher&#39;s name, attendance date, and presence status.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        attendance (ForeignKey): Reference to the `Attendance` model, representing the specific attendance record.</span>
+<span class="sd">        teacher (ForeignKey): Reference to the `Teacher` model, representing the teacher whose attendance is recorded.</span>
+<span class="sd">        is_present (BooleanField): Indicates whether the teacher was present (True) or absent (False).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="n">attendance</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;Attendance&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;teacher_attendance_records&#39;</span><span class="p">)</span>
     <span class="n">teacher</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;Teacher&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;attendance_records&#39;</span><span class="p">)</span>
-    <span class="n">is_present</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">teacher</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> attendance on </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attendance</span><span class="o">.</span><span class="n">attendance_date</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39;Present&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">is_present</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;Absent&#39;</span><span class="si">}</span><span class="s2">&quot;</span></div>
+    <span class="n">is_present</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
 
@@ -425,17 +411,16 @@
 <a class="viewcode-back" href="../../models.html#Exam_Office_System.models.Attendance">[docs]</a>
 <span class="k">class</span> <span class="nc">Attendance</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Model to represent an attendance record for an exam.</span>
+<span class="sd">    Represents an attendance record for an exam.</span>
 
-<span class="sd">    **Fields**:</span>
-<span class="sd">    - `exam`: A foreign key to the `Exam` model, representing the specific exam for which attendance is being recorded.</span>
-<span class="sd">    - `student`: A many-to-many relationship to the `Student` model through `StudentAttendance`, representing the students attending the exam.</span>
-<span class="sd">    - `teacher`: A many-to-many relationship to the `Teacher` model through `TeacherAttendance`, representing the teachers attending the exam.</span>
-<span class="sd">    - `attendance_date`: A date field representing the date of the attendance record.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        exam (ForeignKey): A reference to the `Exam` model, representing the specific exam for which attendance is recorded.</span>
+<span class="sd">        student (ManyToManyField): A many-to-many relationship to the `Student` model through `StudentAttendance`, representing students attending the exam.</span>
+<span class="sd">        teacher (ManyToManyField): A many-to-many relationship to the `Teacher` model through `TeacherAttendance`, representing teachers attending the exam.</span>
+<span class="sd">        attendance_date (DateField): The date of the attendance record.</span>
 
-<span class="sd">    **Methods**:</span>
-<span class="sd">    - `update_teachers_from_exam`: This method updates the list of teachers associated with the exam based on various roles.</span>
-<span class="sd">    - `__str__`: Returns a string representation of the attendance record, showing the exam date.</span>
+<span class="sd">    Methods:</span>
+<span class="sd">        update_teachers_from_exam: This method updates the list of teachers associated with the exam based on roles like invigilators, question creators, and moderators.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">ROLE_CHOICES</span> <span class="o">=</span> <span class="p">[</span>
@@ -452,14 +437,10 @@
 <a class="viewcode-back" href="../../models.html#Exam_Office_System.models.Attendance.update_teachers_from_exam">[docs]</a>
     <span class="k">def</span> <span class="nf">update_teachers_from_exam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Updates the list of teachers associated with this exam based on various roles.</span>
-<span class="sd">        </span>
-<span class="sd">        It fetches teachers who are associated with the exam through different roles,</span>
-<span class="sd">        such as invigilators, question creators, and moderators.</span>
+<span class="sd">        Updates the list of teachers associated with this exam.</span>
 
-<span class="sd">        **Methods**:</span>
-<span class="sd">        - Retrieves teachers from different roles in the `Exam` model.</span>
-<span class="sd">        - Updates the `teacher` field with these associated teachers.</span>
+<span class="sd">        This method fetches teachers associated with the exam in roles like invigilators, question creators,</span>
+<span class="sd">        and moderators, and updates the `teacher` field.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Retrieve all teachers associated with this exam through various roles</span>
         <span class="n">associated_teachers</span> <span class="o">=</span> <span class="n">Teacher</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
@@ -474,15 +455,7 @@
 
         <span class="c1"># Update the &#39;teacher&#39; field with these associated teachers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">associated_teachers</span><span class="p">)</span></div>
-
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Attendance record for exam on </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attendance_date</span><span class="si">}</span><span class="s2">&quot;</span></div>
-
-
-
-
-
+</div>
 
 </pre></div>
 
@@ -511,6 +484,29 @@
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html"><code class="docutils literal notranslate"><span class="pre">Attendance</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.CertificateApplication"><code class="docutils literal notranslate"><span class="pre">CertificateApplication</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.Course"><code class="docutils literal notranslate"><span class="pre">Course</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.Department"><code class="docutils literal notranslate"><span class="pre">Department</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.Exam"><code class="docutils literal notranslate"><span class="pre">Exam</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.ExamMaterials"><code class="docutils literal notranslate"><span class="pre">ExamMaterials</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.ExamOfficeOrAdmin"><code class="docutils literal notranslate"><span class="pre">ExamOfficeOrAdmin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.ExamRegistration"><code class="docutils literal notranslate"><span class="pre">ExamRegistration</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.ExamSchedule"><code class="docutils literal notranslate"><span class="pre">ExamSchedule</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.MarksheetApplication"><code class="docutils literal notranslate"><span class="pre">MarksheetApplication</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.Result"><code class="docutils literal notranslate"><span class="pre">Result</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.Student"><code class="docutils literal notranslate"><span class="pre">Student</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.StudentAttendance"><code class="docutils literal notranslate"><span class="pre">StudentAttendance</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.Teacher"><code class="docutils literal notranslate"><span class="pre">Teacher</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.TeacherAttendance"><code class="docutils literal notranslate"><span class="pre">TeacherAttendance</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.TeacherRemuneration"><code class="docutils literal notranslate"><span class="pre">TeacherRemuneration</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html#Exam_Office_System.models.UserManager"><code class="docutils literal notranslate"><span class="pre">UserManager</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html"><code class="docutils literal notranslate"><span class="pre">attendance_statistics()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html#TrackingAttendence.views.record_attendance"><code class="docutils literal notranslate"><span class="pre">record_attendance()</span></code></a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
