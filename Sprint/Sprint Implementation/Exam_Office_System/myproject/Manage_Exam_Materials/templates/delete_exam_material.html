@@ -1,0 +1,48 @@
+<!-- exam_management/templates/exam_management/delete_exam_material.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Exam Material - Ju Exam Office Management System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Ju Exam Office Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'inventory_list' %}">Inventory</a></li>
+                <li><a href="{% url 'exam_materials_list' %}">Exam Materials</a></li>
+                <li><a href="{% url 'distribute_material' %}">Distribute Materials</a></li>
+                <li><a href="{% url 'distribution_log' %}">Distribution Log</a></li>
+                <li><a href="{% url 'inventory_alerts' %}">Inventory Alerts</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h2>Delete Exam Material</h2>
+        <p>Are you sure you want to delete the following exam material?</p>
+        <ul>
+            <li><strong>Exam:</strong> {{ material.exam }}</li>
+            <li><strong>Material Type:</strong> {{ material.material_type }}</li>
+            <li><strong>Quantity:</strong> {{ material.quantity }}</li>
+        </ul>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirm Delete</button>
+            <a href="{% url 'exam_materials_list' %}">Cancel</a>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ju Exam Office Management System</p>
+    </footer>
+</body>
+</html>

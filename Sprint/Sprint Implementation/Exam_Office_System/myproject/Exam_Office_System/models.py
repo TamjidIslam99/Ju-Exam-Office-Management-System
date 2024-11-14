@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from datetime import date
+from django.utils import timezone
+default=timezone.now
+
 
 # Custom User Manager
 class UserManager(BaseUserManager):
@@ -277,16 +281,46 @@ class TeacherRemuneration(models.Model):
 class ExamMaterials(models.Model):
     MATERIAL_TYPE_CHOICES = [
         ('AnswerScripts', 'Answer Scripts'),
-        ('Pens', 'Pens'),
-        ('QuestionPapers', 'Question Papers'),
+        ('LooseSheets', 'Extra Loose Sheets'),
     ]
-
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='materials')
+    
+    exam = models.ForeignKey('Exam', on_delete=models.CASCADE, related_name='materials')
     material_type = models.CharField(max_length=50, choices=MATERIAL_TYPE_CHOICES)
     quantity = models.IntegerField()
-
+    issued_date = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateField(auto_now=True)
+    
     def __str__(self):
         return f"{self.material_type} for {self.exam}"
+        
+# Inventory Management Model for Stock Tracking and Alerts
+class MaterialInventory(models.Model):
+    material_type = models.CharField(max_length=50, choices=ExamMaterials.MATERIAL_TYPE_CHOICES, unique=True)
+    stock_quantity = models.IntegerField()
+    threshold_quantity = models.IntegerField(default=200)  # Set a default threshold for alerts
+    
+    def __str__(self):
+        return f"{self.material_type} - Stock: {self.stock_quantity}"
+    
+    def is_below_threshold(self):
+        return self.stock_quantity < self.threshold_quantity
+    
+    def update_stock(self, used_quantity):
+        self.stock_quantity -= used_quantity
+        if self.is_below_threshold():
+            # Code to generate an alert to Exam Office Representative
+            print(f"Alert: {self.material_type} stock is below threshold!")
+        self.save()
+
+# Exam Office Representative Activity Log for Auditing
+class MaterialDistributionLog(models.Model):
+    exam = models.ForeignKey('Exam', on_delete=models.CASCADE, related_name='distribution_logs')
+    material_type = models.CharField(max_length=50, choices=ExamMaterials.MATERIAL_TYPE_CHOICES)
+    quantity_issued = models.IntegerField()
+    distribution_date = models.DateField(default=date.today)
+    
+    def __str__(self):
+        return f"{self.quantity_issued} {self.material_type} issued for {self.exam} on {self.distribution_date}"
 
 
 class StudentAttendance(models.Model):
