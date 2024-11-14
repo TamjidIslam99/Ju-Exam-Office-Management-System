@@ -1,0 +1,22 @@
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+  <h1>Attendance Statistics</h1>
+
+  <!-- Student Attendance Statistics -->
+  <div>
+    <h3>Student Attendance</h3>
+    <p>Present: {{ student_present }} students</p>
+    <p>Absent: {{ student_absent }} students</p>
+  </div>
+
+  <!-- Teacher Attendance Statistics -->
+  <div>
+    <h3>Teacher Attendance</h3>
+    <p>Present: {{ teacher_present }} teachers</p>
+    <p>Absent: {{ teacher_absent }} teachers</p>
+  </div>
+
+  <!-- Back to dashboard -->
+  <a href="{% url 'office:dashboard' %}">Back to Dashboard</a>
+{% endblock %}

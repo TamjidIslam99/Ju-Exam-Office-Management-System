@@ -52,7 +52,6 @@
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
- | <a href="#V"><strong>V</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -65,25 +64,40 @@
       <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.amount">amount (Exam_Office_System.models.TeacherRemuneration attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.application_date">application_date (Exam_Office_System.models.CertificateApplication attribute)</a>
-</li>
-      <li><a href="views.html#ApplyForMarksheet.views.apply_marksheet">apply_marksheet() (in module ApplyForMarksheet.views)</a>
-</li>
-      <li>
-    ApplyForMarksheet.views
 
       <ul>
-        <li><a href="views.html#module-ApplyForMarksheet.views">module</a>
+        <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.application_date">(Exam_Office_System.models.MarksheetApplication attribute)</a>
 </li>
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.Attendance">Attendance (class in Exam_Office_System.models)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#Exam_Office_System.models.StudentAttendance.attendance">attendance (Exam_Office_System.models.StudentAttendance attribute)</a>, <a href="models.html#id5">[1]</a>
+
+      <ul>
+        <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.attendance">(Exam_Office_System.models.TeacherAttendance attribute)</a>, <a href="models.html#id8">[1]</a>
+</li>
+      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.Attendance.DoesNotExist">Attendance.DoesNotExist</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.Attendance.MultipleObjectsReturned">Attendance.MultipleObjectsReturned</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Attendance.attendance_date">attendance_date (Exam_Office_System.models.Attendance attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Attendance.attendance_date">attendance_date (Exam_Office_System.models.Attendance attribute)</a>, <a href="models.html#id0">[1]</a>
+</li>
+      <li><a href="models.html#Exam_Office_System.models.StudentAttendance.attendance_id">attendance_id (Exam_Office_System.models.StudentAttendance attribute)</a>
+
+      <ul>
+        <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.attendance_id">(Exam_Office_System.models.TeacherAttendance attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="models.html#Exam_Office_System.models.Student.attendance_records">attendance_records (Exam_Office_System.models.Student attribute)</a>
+
+      <ul>
+        <li><a href="models.html#Exam_Office_System.models.Teacher.attendance_records">(Exam_Office_System.models.Teacher attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="views.html#TrackingAttendence.views.attendance_statistics">attendance_statistics() (in module TrackingAttendence.views)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Exam.attendances">attendances (Exam_Office_System.models.Exam attribute)</a>
 
@@ -91,13 +105,6 @@
         <li><a href="models.html#Exam_Office_System.models.Student.attendances">(Exam_Office_System.models.Student attribute)</a>
 </li>
         <li><a href="models.html#Exam_Office_System.models.Teacher.attendances">(Exam_Office_System.models.Teacher attribute)</a>
-</li>
-      </ul></li>
-      <li>
-    Authentication.views
-
-      <ul>
-        <li><a href="reg_log_views.html#module-Authentication.views">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -122,33 +129,29 @@
 </li>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.MultipleObjectsReturned">CertificateApplication.MultipleObjectsReturned</a>
 </li>
-      <li><a href="views.html#ApplyForMarksheet.views.confirm_marksheet">confirm_marksheet() (in module ApplyForMarksheet.views)</a>
-</li>
       <li><a href="models.html#Exam_Office_System.models.ExamOfficeOrAdmin.contact_number">contact_number (Exam_Office_System.models.ExamOfficeOrAdmin attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Course">Course (class in Exam_Office_System.models)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.course">course (Exam_Office_System.models.Exam attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Course.DoesNotExist">Course.DoesNotExist</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="models.html#Exam_Office_System.models.Course.DoesNotExist">Course.DoesNotExist</a>
-</li>
       <li><a href="models.html#Exam_Office_System.models.Course.MultipleObjectsReturned">Course.MultipleObjectsReturned</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Course.course_code">course_code (Exam_Office_System.models.Course attribute)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.course_id">course_id (Exam_Office_System.models.Exam attribute)</a>
-</li>
       <li><a href="models.html#Exam_Office_System.models.Course.course_title">course_title (Exam_Office_System.models.Course attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Department.courses">courses (Exam_Office_System.models.Department attribute)</a>
+
+      <ul>
+        <li><a href="models.html#Exam_Office_System.models.Exam.courses">(Exam_Office_System.models.Exam attribute)</a>
 </li>
+      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.UserManager.create_superuser">create_superuser() (Exam_Office_System.models.UserManager method)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.UserManager.create_user">create_user() (Exam_Office_System.models.UserManager method)</a>
-</li>
-      <li><a href="reg_log_views.html#Authentication.views.CustomLoginView">CustomLoginView (class in Authentication.views)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -156,8 +159,6 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reg_log_views.html#Authentication.views.dashboard">dashboard() (in module Authentication.views)</a>
-</li>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.degree">degree (Exam_Office_System.models.CertificateApplication attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.DEGREE_CHOICES">DEGREE_CHOICES (Exam_Office_System.models.CertificateApplication attribute)</a>
@@ -192,8 +193,6 @@
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.User.department_profile">department_profile (Exam_Office_System.models.User attribute)</a>
 </li>
-      <li><a href="reg_log_views.html#Authentication.views.DepartmentRegisterView">DepartmentRegisterView (class in Authentication.views)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -204,7 +203,7 @@
 </li>
       <li><a href="models.html#Exam_Office_System.models.Exam">Exam (class in Exam_Office_System.models)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Attendance.exam">exam (Exam_Office_System.models.Attendance attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Attendance.exam">exam (Exam_Office_System.models.Attendance attribute)</a>, <a href="models.html#id1">[1]</a>
 
       <ul>
         <li><a href="models.html#Exam_Office_System.models.ExamMaterials.exam">(Exam_Office_System.models.ExamMaterials attribute)</a>
@@ -246,6 +245,8 @@
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.User.exam_office_profile">exam_office_profile (Exam_Office_System.models.User attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     Exam_Office_System.models
 
@@ -253,21 +254,13 @@
         <li><a href="models.html#module-Exam_Office_System.models">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.Student.exam_registrations">exam_registrations (Exam_Office_System.models.Student attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Exam.examiner1">examiner1 (Exam_Office_System.models.Exam attribute)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.examiner1_id">examiner1_id (Exam_Office_System.models.Exam attribute)</a>
-</li>
       <li><a href="models.html#Exam_Office_System.models.Exam.examiner2">examiner2 (Exam_Office_System.models.Exam attribute)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.examiner2_id">examiner2_id (Exam_Office_System.models.Exam attribute)</a>
-</li>
       <li><a href="models.html#Exam_Office_System.models.Exam.examiner3">examiner3 (Exam_Office_System.models.Exam attribute)</a>
-</li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.examiner3_id">examiner3_id (Exam_Office_System.models.Exam attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.ExamMaterials">ExamMaterials (class in Exam_Office_System.models)</a>
 </li>
@@ -280,8 +273,6 @@
       <li><a href="models.html#Exam_Office_System.models.ExamOfficeOrAdmin.DoesNotExist">ExamOfficeOrAdmin.DoesNotExist</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.ExamOfficeOrAdmin.MultipleObjectsReturned">ExamOfficeOrAdmin.MultipleObjectsReturned</a>
-</li>
-      <li><a href="reg_log_views.html#Authentication.views.ExamOfficeRegisterView">ExamOfficeRegisterView (class in Authentication.views)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.ExamRegistration">ExamRegistration (class in Exam_Office_System.models)</a>
 </li>
@@ -311,24 +302,16 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reg_log_views.html#Authentication.views.CustomLoginView.get">get() (Authentication.views.CustomLoginView method)</a>
-
-      <ul>
-        <li><a href="reg_log_views.html#Authentication.views.DepartmentRegisterView.get">(Authentication.views.DepartmentRegisterView method)</a>
-</li>
-        <li><a href="reg_log_views.html#Authentication.views.ExamOfficeRegisterView.get">(Authentication.views.ExamOfficeRegisterView method)</a>
-</li>
-        <li><a href="reg_log_views.html#Authentication.views.StudentRegisterView.get">(Authentication.views.StudentRegisterView method)</a>
-</li>
-        <li><a href="reg_log_views.html#Authentication.views.TeacherRegisterView.get">(Authentication.views.TeacherRegisterView method)</a>
-</li>
-      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.get_degree_display">get_degree_display() (Exam_Office_System.models.CertificateApplication method)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.ExamMaterials.get_material_type_display">get_material_type_display() (Exam_Office_System.models.ExamMaterials method)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.get_next_by_application_date">get_next_by_application_date() (Exam_Office_System.models.CertificateApplication method)</a>
+
+      <ul>
+        <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.get_next_by_application_date">(Exam_Office_System.models.MarksheetApplication method)</a>
 </li>
+      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.Attendance.get_next_by_attendance_date">get_next_by_attendance_date() (Exam_Office_System.models.Attendance method)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Exam.get_next_by_exam_date">get_next_by_exam_date() (Exam_Office_System.models.Exam method)</a>
@@ -342,6 +325,8 @@
       <ul>
         <li><a href="models.html#Exam_Office_System.models.ExamRegistration.get_payment_method_display">(Exam_Office_System.models.ExamRegistration method)</a>
 </li>
+        <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.get_payment_method_display">(Exam_Office_System.models.MarksheetApplication method)</a>
+</li>
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.get_payment_status_display">get_payment_status_display() (Exam_Office_System.models.CertificateApplication method)</a>
 
@@ -354,7 +339,11 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.get_previous_by_application_date">get_previous_by_application_date() (Exam_Office_System.models.CertificateApplication method)</a>
+
+      <ul>
+        <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.get_previous_by_application_date">(Exam_Office_System.models.MarksheetApplication method)</a>
 </li>
+      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.Attendance.get_previous_by_attendance_date">get_previous_by_attendance_date() (Exam_Office_System.models.Attendance method)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Exam.get_previous_by_exam_date">get_previous_by_exam_date() (Exam_Office_System.models.Exam method)</a>
@@ -365,11 +354,9 @@
 </li>
       <li><a href="models.html#Exam_Office_System.models.ExamRegistration.get_registration_type_display">get_registration_type_display() (Exam_Office_System.models.ExamRegistration method)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Attendance.get_role_display">get_role_display() (Exam_Office_System.models.Attendance method)</a>
+      <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.get_role_display">get_role_display() (Exam_Office_System.models.TeacherRemuneration method)</a>
 
       <ul>
-        <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.get_role_display">(Exam_Office_System.models.TeacherRemuneration method)</a>
-</li>
         <li><a href="models.html#Exam_Office_System.models.User.get_role_display">(Exam_Office_System.models.User method)</a>
 </li>
       </ul></li>
@@ -394,10 +381,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.Student.hall_clearance">hall_clearance (Exam_Office_System.models.Student attribute)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="views.html#ApplyForMarksheet.views.handle_payment">handle_payment() (in module ApplyForMarksheet.views)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -430,7 +413,11 @@
 </li>
         <li><a href="models.html#Exam_Office_System.models.Student.id">(Exam_Office_System.models.Student attribute)</a>
 </li>
+        <li><a href="models.html#Exam_Office_System.models.StudentAttendance.id">(Exam_Office_System.models.StudentAttendance attribute)</a>
+</li>
         <li><a href="models.html#Exam_Office_System.models.Teacher.id">(Exam_Office_System.models.Teacher attribute)</a>
+</li>
+        <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.id">(Exam_Office_System.models.TeacherAttendance attribute)</a>
 </li>
         <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.id">(Exam_Office_System.models.TeacherRemuneration attribute)</a>
 </li>
@@ -445,10 +432,14 @@
 </li>
       <li><a href="models.html#Exam_Office_System.models.Exam.invigilator">invigilator (Exam_Office_System.models.Exam attribute)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.invigilator_id">invigilator_id (Exam_Office_System.models.Exam attribute)</a>
-</li>
       <li><a href="models.html#Exam_Office_System.models.User.is_active">is_active (Exam_Office_System.models.User attribute)</a>
 </li>
+      <li><a href="models.html#Exam_Office_System.models.StudentAttendance.is_present">is_present (Exam_Office_System.models.StudentAttendance attribute)</a>, <a href="models.html#id6">[1]</a>
+
+      <ul>
+        <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.is_present">(Exam_Office_System.models.TeacherAttendance attribute)</a>, <a href="models.html#id9">[1]</a>
+</li>
+      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.User.is_staff">is_staff (Exam_Office_System.models.User attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.User.is_superuser">is_superuser (Exam_Office_System.models.User attribute)</a>
@@ -461,13 +452,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.User.last_login">last_login (Exam_Office_System.models.User attribute)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Student.library_clearance">library_clearance (Exam_Office_System.models.Student attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="models.html#Exam_Office_System.models.User.logentry_set">logentry_set (Exam_Office_System.models.User attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Student.library_clearance">library_clearance (Exam_Office_System.models.Student attribute)</a>
 </li>
-      <li><a href="reg_log_views.html#Authentication.views.logout_view">logout_view() (in module Authentication.views)</a>
+      <li><a href="models.html#Exam_Office_System.models.User.logentry_set">logentry_set (Exam_Office_System.models.User attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -477,31 +466,29 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.Result.marks">marks (Exam_Office_System.models.Result attribute)</a>
 </li>
+      <li><a href="models.html#Exam_Office_System.models.Exam.marksheet_applications">marksheet_applications (Exam_Office_System.models.Exam attribute)</a>
+
+      <ul>
+        <li><a href="models.html#Exam_Office_System.models.Student.marksheet_applications">(Exam_Office_System.models.Student attribute)</a>
+</li>
+      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.MarksheetApplication">MarksheetApplication (class in Exam_Office_System.models)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.DoesNotExist">MarksheetApplication.DoesNotExist</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.MultipleObjectsReturned">MarksheetApplication.MultipleObjectsReturned</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.marksheetapplication_set">marksheetapplication_set (Exam_Office_System.models.Exam attribute)</a>
-
-      <ul>
-        <li><a href="models.html#Exam_Office_System.models.Student.marksheetapplication_set">(Exam_Office_System.models.Student attribute)</a>
-</li>
-      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.ExamMaterials.material_type">material_type (Exam_Office_System.models.ExamMaterials attribute)</a>
-</li>
-      <li><a href="models.html#Exam_Office_System.models.ExamMaterials.MATERIAL_TYPE_CHOICES">MATERIAL_TYPE_CHOICES (Exam_Office_System.models.ExamMaterials attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#Exam_Office_System.models.ExamMaterials.MATERIAL_TYPE_CHOICES">MATERIAL_TYPE_CHOICES (Exam_Office_System.models.ExamMaterials attribute)</a>
+</li>
       <li><a href="models.html#Exam_Office_System.models.Exam.materials">materials (Exam_Office_System.models.Exam attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Teacher.moderated_exams">moderated_exams (Exam_Office_System.models.Teacher attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Exam.moderator">moderator (Exam_Office_System.models.Exam attribute)</a>
-</li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.moderator_id">moderator_id (Exam_Office_System.models.Exam attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.ExamSchedule.modified_date">modified_date (Exam_Office_System.models.ExamSchedule attribute)</a>
 </li>
@@ -509,11 +496,9 @@
     module
 
       <ul>
-        <li><a href="views.html#module-ApplyForMarksheet.views">ApplyForMarksheet.views</a>
-</li>
-        <li><a href="reg_log_views.html#module-Authentication.views">Authentication.views</a>
-</li>
         <li><a href="models.html#module-Exam_Office_System.models">Exam_Office_System.models</a>
+</li>
+        <li><a href="views.html#module-TrackingAttendence.views">TrackingAttendence.views</a>
 </li>
       </ul></li>
   </ul></td>
@@ -561,7 +546,11 @@
 </li>
         <li><a href="models.html#Exam_Office_System.models.Student.objects">(Exam_Office_System.models.Student attribute)</a>
 </li>
+        <li><a href="models.html#Exam_Office_System.models.StudentAttendance.objects">(Exam_Office_System.models.StudentAttendance attribute)</a>
+</li>
         <li><a href="models.html#Exam_Office_System.models.Teacher.objects">(Exam_Office_System.models.Teacher attribute)</a>
+</li>
+        <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.objects">(Exam_Office_System.models.TeacherAttendance attribute)</a>
 </li>
         <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.objects">(Exam_Office_System.models.TeacherRemuneration attribute)</a>
 </li>
@@ -598,6 +587,8 @@
         <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.PAYMENT_METHOD_CHOICES">(Exam_Office_System.models.MarksheetApplication attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.payment_status">payment_status (Exam_Office_System.models.CertificateApplication attribute)</a>
 
       <ul>
@@ -606,26 +597,12 @@
         <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.payment_status">(Exam_Office_System.models.MarksheetApplication attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.CertificateApplication.PAYMENT_STATUS_CHOICES">PAYMENT_STATUS_CHOICES (Exam_Office_System.models.CertificateApplication attribute)</a>
 
       <ul>
         <li><a href="models.html#Exam_Office_System.models.ExamRegistration.PAYMENT_STATUS_CHOICES">(Exam_Office_System.models.ExamRegistration attribute)</a>
 </li>
         <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.PAYMENT_STATUS_CHOICES">(Exam_Office_System.models.MarksheetApplication attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="reg_log_views.html#Authentication.views.CustomLoginView.post">post() (Authentication.views.CustomLoginView method)</a>
-
-      <ul>
-        <li><a href="reg_log_views.html#Authentication.views.DepartmentRegisterView.post">(Authentication.views.DepartmentRegisterView method)</a>
-</li>
-        <li><a href="reg_log_views.html#Authentication.views.ExamOfficeRegisterView.post">(Authentication.views.ExamOfficeRegisterView method)</a>
-</li>
-        <li><a href="reg_log_views.html#Authentication.views.StudentRegisterView.post">(Authentication.views.StudentRegisterView method)</a>
-</li>
-        <li><a href="reg_log_views.html#Authentication.views.TeacherRegisterView.post">(Authentication.views.TeacherRegisterView method)</a>
 </li>
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.ExamSchedule.published_date">published_date (Exam_Office_System.models.ExamSchedule attribute)</a>
@@ -638,13 +615,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.ExamMaterials.quantity">quantity (Exam_Office_System.models.ExamMaterials attribute)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Teacher.question_created_exams">question_created_exams (Exam_Office_System.models.Teacher attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="models.html#Exam_Office_System.models.Exam.question_creator">question_creator (Exam_Office_System.models.Exam attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Teacher.question_created_exams">question_created_exams (Exam_Office_System.models.Teacher attribute)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.question_creator_id">question_creator_id (Exam_Office_System.models.Exam attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Exam.question_creator">question_creator (Exam_Office_System.models.Exam attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -652,6 +627,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="views.html#TrackingAttendence.views.record_attendance">record_attendance() (in module TrackingAttendence.views)</a>
+</li>
       <li><a href="models.html#Exam_Office_System.models.ExamRegistration.registration_date">registration_date (Exam_Office_System.models.ExamRegistration attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Student.registration_number">registration_number (Exam_Office_System.models.Student attribute)</a>
@@ -670,10 +647,10 @@
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.User.REQUIRED_FIELDS">REQUIRED_FIELDS (Exam_Office_System.models.User attribute)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Result">Result (class in Exam_Office_System.models)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#Exam_Office_System.models.Result">Result (class in Exam_Office_System.models)</a>
+</li>
       <li><a href="models.html#Exam_Office_System.models.Result.DoesNotExist">Result.DoesNotExist</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Result.MultipleObjectsReturned">Result.MultipleObjectsReturned</a>
@@ -684,11 +661,9 @@
         <li><a href="models.html#Exam_Office_System.models.Student.results">(Exam_Office_System.models.Student attribute)</a>
 </li>
       </ul></li>
-      <li><a href="models.html#Exam_Office_System.models.Attendance.role">role (Exam_Office_System.models.Attendance attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.role">role (Exam_Office_System.models.TeacherRemuneration attribute)</a>
 
       <ul>
-        <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.role">(Exam_Office_System.models.TeacherRemuneration attribute)</a>
-</li>
         <li><a href="models.html#Exam_Office_System.models.User.role">(Exam_Office_System.models.User attribute)</a>
 </li>
       </ul></li>
@@ -740,9 +715,7 @@
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.Student">Student (class in Exam_Office_System.models)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="models.html#Exam_Office_System.models.Attendance.student">student (Exam_Office_System.models.Attendance attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Attendance.student">student (Exam_Office_System.models.Attendance attribute)</a>, <a href="models.html#id2">[1]</a>
 
       <ul>
         <li><a href="models.html#Exam_Office_System.models.CertificateApplication.student">(Exam_Office_System.models.CertificateApplication attribute)</a>
@@ -753,26 +726,36 @@
 </li>
         <li><a href="models.html#Exam_Office_System.models.Result.student">(Exam_Office_System.models.Result attribute)</a>
 </li>
+        <li><a href="models.html#Exam_Office_System.models.StudentAttendance.student">(Exam_Office_System.models.StudentAttendance attribute)</a>, <a href="models.html#id7">[1]</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.Student.DoesNotExist">Student.DoesNotExist</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Student.MultipleObjectsReturned">Student.MultipleObjectsReturned</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Attendance.student_id">student_id (Exam_Office_System.models.Attendance attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Attendance.student_attendance_records">student_attendance_records (Exam_Office_System.models.Attendance attribute)</a>
+</li>
+      <li><a href="models.html#Exam_Office_System.models.CertificateApplication.student_id">student_id (Exam_Office_System.models.CertificateApplication attribute)</a>
 
       <ul>
-        <li><a href="models.html#Exam_Office_System.models.CertificateApplication.student_id">(Exam_Office_System.models.CertificateApplication attribute)</a>
-</li>
         <li><a href="models.html#Exam_Office_System.models.ExamRegistration.student_id">(Exam_Office_System.models.ExamRegistration attribute)</a>
 </li>
         <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.student_id">(Exam_Office_System.models.MarksheetApplication attribute)</a>
 </li>
         <li><a href="models.html#Exam_Office_System.models.Result.student_id">(Exam_Office_System.models.Result attribute)</a>
 </li>
+        <li><a href="models.html#Exam_Office_System.models.StudentAttendance.student_id">(Exam_Office_System.models.StudentAttendance attribute)</a>
+</li>
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.User.student_profile">student_profile (Exam_Office_System.models.User attribute)</a>
 </li>
-      <li><a href="reg_log_views.html#Authentication.views.StudentRegisterView">StudentRegisterView (class in Authentication.views)</a>
+      <li><a href="models.html#Exam_Office_System.models.StudentAttendance">StudentAttendance (class in Exam_Office_System.models)</a>
+</li>
+      <li><a href="models.html#Exam_Office_System.models.StudentAttendance.DoesNotExist">StudentAttendance.DoesNotExist</a>
+</li>
+      <li><a href="models.html#Exam_Office_System.models.StudentAttendance.MultipleObjectsReturned">StudentAttendance.MultipleObjectsReturned</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Department.students">students (Exam_Office_System.models.Department attribute)</a>
 </li>
@@ -784,9 +767,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="models.html#Exam_Office_System.models.Teacher">Teacher (class in Exam_Office_System.models)</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Attendance.teacher">teacher (Exam_Office_System.models.Attendance attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Attendance.teacher">teacher (Exam_Office_System.models.Attendance attribute)</a>, <a href="models.html#id3">[1]</a>
 
       <ul>
+        <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.teacher">(Exam_Office_System.models.TeacherAttendance attribute)</a>, <a href="models.html#id10">[1]</a>
+</li>
         <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.teacher">(Exam_Office_System.models.TeacherRemuneration attribute)</a>
 </li>
       </ul></li>
@@ -794,7 +779,9 @@
 </li>
       <li><a href="models.html#Exam_Office_System.models.Teacher.MultipleObjectsReturned">Teacher.MultipleObjectsReturned</a>
 </li>
-      <li><a href="models.html#Exam_Office_System.models.Attendance.teacher_id">teacher_id (Exam_Office_System.models.Attendance attribute)</a>
+      <li><a href="models.html#Exam_Office_System.models.Attendance.teacher_attendance_records">teacher_attendance_records (Exam_Office_System.models.Attendance attribute)</a>
+</li>
+      <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.teacher_id">teacher_id (Exam_Office_System.models.TeacherAttendance attribute)</a>
 
       <ul>
         <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.teacher_id">(Exam_Office_System.models.TeacherRemuneration attribute)</a>
@@ -802,10 +789,14 @@
       </ul></li>
       <li><a href="models.html#Exam_Office_System.models.User.teacher_profile">teacher_profile (Exam_Office_System.models.User attribute)</a>
 </li>
-      <li><a href="reg_log_views.html#Authentication.views.TeacherRegisterView">TeacherRegisterView (class in Authentication.views)</a>
+      <li><a href="models.html#Exam_Office_System.models.TeacherAttendance">TeacherAttendance (class in Exam_Office_System.models)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.DoesNotExist">TeacherAttendance.DoesNotExist</a>
+</li>
+      <li><a href="models.html#Exam_Office_System.models.TeacherAttendance.MultipleObjectsReturned">TeacherAttendance.MultipleObjectsReturned</a>
+</li>
       <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration">TeacherRemuneration (class in Exam_Office_System.models)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.TeacherRemuneration.DoesNotExist">TeacherRemuneration.DoesNotExist</a>
@@ -820,11 +811,16 @@
         <li><a href="models.html#Exam_Office_System.models.MarksheetApplication.token">(Exam_Office_System.models.MarksheetApplication attribute)</a>
 </li>
       </ul></li>
+      <li>
+    TrackingAttendence.views
+
+      <ul>
+        <li><a href="views.html#module-TrackingAttendence.views">module</a>
+</li>
+      </ul></li>
       <li><a href="models.html#Exam_Office_System.models.Teacher.translated_exams">translated_exams (Exam_Office_System.models.Teacher attribute)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Exam.translator">translator (Exam_Office_System.models.Exam attribute)</a>
-</li>
-      <li><a href="models.html#Exam_Office_System.models.Exam.translator_id">translator_id (Exam_Office_System.models.Exam attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -832,6 +828,8 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#Exam_Office_System.models.Attendance.update_teachers_from_exam">update_teachers_from_exam() (Exam_Office_System.models.Attendance method)</a>, <a href="models.html#id4">[1]</a>
+</li>
       <li><a href="models.html#Exam_Office_System.models.User">User (class in Exam_Office_System.models)</a>
 </li>
       <li><a href="models.html#Exam_Office_System.models.Department.user">user (Exam_Office_System.models.Department attribute)</a>
@@ -871,14 +869,6 @@
   </ul></td>
 </tr></table>
 
-<h2 id="V">V</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="views.html#ApplyForMarksheet.views.verify_student_eligibility">verify_student_eligibility() (in module ApplyForMarksheet.views)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 
 
           </div>
@@ -908,9 +898,26 @@
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="models.html">Your Project Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="views.html">Your Project Views</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reg_log_views.html">Registration and Log in View</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html"><code class="docutils literal notranslate"><span class="pre">Attendance</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.CertificateApplication"><code class="docutils literal notranslate"><span class="pre">CertificateApplication</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.Course"><code class="docutils literal notranslate"><span class="pre">Course</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.Department"><code class="docutils literal notranslate"><span class="pre">Department</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.Exam"><code class="docutils literal notranslate"><span class="pre">Exam</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.ExamMaterials"><code class="docutils literal notranslate"><span class="pre">ExamMaterials</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.ExamOfficeOrAdmin"><code class="docutils literal notranslate"><span class="pre">ExamOfficeOrAdmin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.ExamRegistration"><code class="docutils literal notranslate"><span class="pre">ExamRegistration</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.ExamSchedule"><code class="docutils literal notranslate"><span class="pre">ExamSchedule</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.MarksheetApplication"><code class="docutils literal notranslate"><span class="pre">MarksheetApplication</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.Result"><code class="docutils literal notranslate"><span class="pre">Result</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.Student"><code class="docutils literal notranslate"><span class="pre">Student</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.StudentAttendance"><code class="docutils literal notranslate"><span class="pre">StudentAttendance</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.Teacher"><code class="docutils literal notranslate"><span class="pre">Teacher</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.TeacherAttendance"><code class="docutils literal notranslate"><span class="pre">TeacherAttendance</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.TeacherRemuneration"><code class="docutils literal notranslate"><span class="pre">TeacherRemuneration</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#Exam_Office_System.models.UserManager"><code class="docutils literal notranslate"><span class="pre">UserManager</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html"><code class="docutils literal notranslate"><span class="pre">attendance_statistics()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html#TrackingAttendence.views.record_attendance"><code class="docutils literal notranslate"><span class="pre">record_attendance()</span></code></a></li>
 </ul>
 
 <div class="relations">

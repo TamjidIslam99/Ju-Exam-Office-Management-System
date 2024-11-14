@@ -1,7 +1,4 @@
-Your Project Views
-===================
-
-.. automodule:: ApplyForMarksheet.views
+.. automodule:: TrackingAttendence.views
    :members:
    :undoc-members:
    :show-inheritance:

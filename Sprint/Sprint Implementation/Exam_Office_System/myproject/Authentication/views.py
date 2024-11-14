@@ -10,7 +10,7 @@ from .forms import (
 from Exam_Office_System.models import (
     User, Department, Student, Teacher, ExamOfficeOrAdmin, Course, Exam,
     ExamSchedule, ExamRegistration, Result, MarksheetApplication,
-    CertificateApplication, TeacherRemuneration, ExamMaterials, Attendance
+    CertificateApplication, TeacherRemuneration, ExamMaterials,StudentAttendance,TeacherAttendance,Attendance
 )
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -45,7 +45,7 @@ class ExamOfficeRegisterView(View):
             profile.user = user
             profile.save()
             messages.success(request, 'Exam Office registered successfully!')
-            return redirect('login')
+            return redirect('office:login')
         return render(request, 'Exam_Office/register_exam_office.html', {
             'user_form': user_form,
             'profile_form': profile_form
@@ -78,7 +78,7 @@ class StudentRegisterView(View):
             profile.user = user
             profile.save()
             messages.success(request, 'Student registered successfully!')
-            return redirect('login')
+            return redirect('office:login')
         return render(request, 'Exam_Office/register_student.html', {
             'user_form': user_form,
             'profile_form': profile_form
@@ -111,7 +111,7 @@ class TeacherRegisterView(View):
             profile.user = user
             profile.save()
             messages.success(request, 'Teacher registered successfully!')
-            return redirect('login')
+            return redirect('office:login')
         return render(request, 'Exam_Office/register_teacher.html', {
             'user_form': user_form,
             'profile_form': profile_form
@@ -144,7 +144,7 @@ class DepartmentRegisterView(View):
             profile.user = user
             profile.save()
             messages.success(request, 'Department registered successfully!')
-            return redirect('login')
+            return redirect('office:login')
         return render(request, 'Exam_Office/register_department.html', {
             'user_form': user_form,
             'profile_form': profile_form
@@ -168,7 +168,7 @@ class CustomLoginView(View):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dashboard')
+            return redirect('office:dashboard')
         else:
             messages.error(request, 'Invalid username or password')
             return render(request, 'Exam_Office/login.html', {'form': form})
@@ -179,7 +179,7 @@ def logout_view(request):
     Logs out the user and redirects to login page.
     """
     logout(request)
-    return redirect('login')
+    return redirect('office:login')
 
 # Dashboard View
 @login_required
@@ -195,7 +195,8 @@ def dashboard(request):
     """
     user = request.user
     if user.role == 'Exam_Office':
-        return render(request, 'Exam_Office/exam_office_dashboard.html')
+        attendances = Attendance.objects.all() 
+        return render(request, 'Exam_Office/exam_office_dashboard.html', {'attendances': attendances})
     elif user.role == 'Student':
         return render(request, 'Exam_Office/student_dashboard.html')
     elif user.role == 'Teacher':
@@ -203,4 +204,6 @@ def dashboard(request):
     elif user.role == 'Department':
         return render(request, 'Exam_Office/department_dashboard.html')
     else:
+         # Fetch all attendance records
+
         return render(request, 'Exam_Office/dashboard.html')
