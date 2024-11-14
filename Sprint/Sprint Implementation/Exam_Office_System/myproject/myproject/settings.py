@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Authentication',
     'Publish_Result',
     'Answer_Script_Management',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

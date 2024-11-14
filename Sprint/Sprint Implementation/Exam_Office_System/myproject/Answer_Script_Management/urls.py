@@ -1,9 +1,9 @@
-# Answer_Script_Management/urls.py
 from django.urls import path
-from . import views
+from .views import manage_answer_scripts, view_attendance_and_scripts, evaluate_script, finalize_management
 
 urlpatterns = [
-    path('assign_answer_script/<int:exam_id>/', views.assign_answer_script, name='assign_answer_script'),
-    path('grade_answer_script/<int:answer_script_id>/', views.grade_answer_script, name='grade_answer_script'),
-    path('finalize_answer_script/<int:answer_script_id>/', views.finalize_answer_script, name='finalize_answer_script'),
+    path('manage/', manage_answer_scripts, name='manage_answer_scripts'),
+    path('exam/<int:exam_id>/attendance/', view_attendance_and_scripts, name='view_attendance_and_scripts'),
+    path('evaluate/<int:script_id>/', evaluate_script, name='evaluate_script'),
+    path('finalize/', finalize_management, name='finalize_management'),
 ]

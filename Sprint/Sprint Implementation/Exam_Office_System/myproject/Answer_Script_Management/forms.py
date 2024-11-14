@@ -1,7 +1,7 @@
 from django import forms
-from .models import ExaminerAssignment
+from .models import AnswerScript
 
-class ExaminerAssignmentForm(forms.ModelForm):
+class EvaluateScriptForm(forms.ModelForm):
     class Meta:
-        model = ExaminerAssignment
-        fields = ['first_examiner', 'second_examiner', 'third_examiner']
+        model = AnswerScript
+        fields = ['marks_examiner1', 'marks_examiner2', 'marks_examiner3']

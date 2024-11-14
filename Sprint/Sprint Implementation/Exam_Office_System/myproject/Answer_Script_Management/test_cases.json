@@ -1,63 +1,36 @@
-[
-    {
-      "exam_id": 1,
-      "student_id": 1,
-      "examiner_id": 1,
-      "expected_grading_status": "Not Graded"
-    },
-    {
-      "exam_id": 2,
-      "student_id": 2,
-      "examiner_id": 2,
-      "expected_grading_status": "Graded"
-    },
-    {
-      "exam_id": 3,
-      "student_id": 3,
-      "examiner_id": 3,
-      "expected_grading_status": "Not Graded"
-    },
-    {
-      "exam_id": 4,
-      "student_id": 4,
-      "examiner_id": 4,
-      "expected_grading_status": "Graded"
-    },
-    {
-      "exam_id": 5,
-      "student_id": 5,
-      "examiner_id": 5,
-      "expected_grading_status": "Not Graded"
-    },
-    {
-      "exam_id": 6,
-      "student_id": 6,
-      "examiner_id": 6,
-      "expected_grading_status": "Graded"
-    },
-    {
-      "exam_id": 7,
-      "student_id": 7,
-      "examiner_id": 7,
-      "expected_grading_status": "Not Graded"
-    },
-    {
-      "exam_id": 8,
-      "student_id": 8,
-      "examiner_id": 8,
-      "expected_grading_status": "Graded"
-    },
-    {
-      "exam_id": 9,
-      "student_id": 9,
-      "examiner_id": 9,
-      "expected_grading_status": "Not Graded"
-    },
-    {
-      "exam_id": 10,
-      "student_id": 10,
-      "examiner_id": 10,
-      "expected_grading_status": "Graded"
-    }
-  ]
-  
+{
+  "manage_answer_scripts": {
+      "GET": {
+          "status_code": 200,
+          "context": {
+              "exams": "list"
+          }
+      }
+  },
+  "view_attendance_and_scripts": {
+      "GET": {
+          "status_code": 200,
+          "context": {
+              "exam": "object",
+              "students": "list",
+              "answer_scripts": "list"
+          },
+          "exam_id": 1
+      }
+  },
+  "evaluate_script": {
+      "GET": {
+          "status_code": 200,
+          "context": {
+              "answer_script": "object"
+          },
+          "script_id": 1
+      }
+  },
+  "finalize_management": {
+      "POST": {
+          "status_code": 302,
+          "redirect_url": "/manage/"
+      }
+  }
+}
