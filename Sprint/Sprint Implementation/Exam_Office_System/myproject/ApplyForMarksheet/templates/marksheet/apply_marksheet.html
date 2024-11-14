@@ -1,0 +1,28 @@
+<!-- ApplyForMarksheet/templates/marksheet/apply_marksheet.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4>Select Exam for Marksheet Application</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="form-label"><strong>Select Exam:</strong></label>
+                        {{ form.exam }}
+                        {% if form.exam.errors %}
+                            <div class="text-danger">
+                                {{ form.exam.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Proceed to Confirmation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

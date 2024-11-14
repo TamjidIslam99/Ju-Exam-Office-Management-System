@@ -28,7 +28,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+
+# Use a fast password hasher to speed up tests
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Exam_Office_System',
     'Authentication',
+    'ApplyForMarksheet',
 ]
 
 MIDDLEWARE = [

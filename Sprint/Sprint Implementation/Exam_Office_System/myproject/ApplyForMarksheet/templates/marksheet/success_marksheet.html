@@ -1,0 +1,15 @@
+<!-- ApplyForMarksheet/templates/marksheet/success_marksheet.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="alert alert-success text-center">
+            <h4 class="alert-heading">Application Successful!</h4>
+            <p>Your application has been recorded successfully.</p>
+            <hr>
+            <p>You can collect your marksheet after three days from the exam office.</p>
+            <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3">Go to Dashboard</a>
+        </div>
+    </div>
+{% endblock %}
