@@ -1,0 +1,14 @@
+<!-- templates/apply_for_certificate.html -->
+
+<h1>Apply for Certificate</h1>
+
+<p>Student Name: {{ student.name }}</p>
+<p>Registration Number: {{ student.registration_number }}</p>
+<p>Session: {{ student.session }}</p>
+<p>Department: {{ student.department.name }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Application</button>
+</form>
