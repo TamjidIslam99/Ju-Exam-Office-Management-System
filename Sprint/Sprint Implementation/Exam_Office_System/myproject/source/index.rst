@@ -21,3 +21,6 @@ documentation for details.
    models
    views
 
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

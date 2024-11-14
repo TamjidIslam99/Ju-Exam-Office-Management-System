@@ -1,0 +1,12 @@
+<!-- view_result/templates/view_result/result_display.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <h2>Result for {{ exam_registration.exam.course.course_code }} - {{ exam_registration.exam.course.course_title }}</h2>
+    <p><strong>Exam Date:</strong> {{ exam_registration.exam.exam_date }}</p>
+    <p><strong>Registration Type:</strong> {{ exam_registration.registration_type }}</p>
+    <p><strong>Marks Obtained:</strong> {{ result.marks }}</p>
+    
+    <a href="{% url 'view_result:view_result' %}">View Another Result</a>
+{% endblock %}

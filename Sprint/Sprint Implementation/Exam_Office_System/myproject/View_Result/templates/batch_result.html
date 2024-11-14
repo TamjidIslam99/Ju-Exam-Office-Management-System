@@ -1,0 +1,40 @@
+<!-- view_result/templates/view_result/batch_result.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Batch Results{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Batch Results</h2>
+<p><strong>Department:</strong> {{ department.name }}</p>
+<p><strong>Year:</strong> {{ year }}</p>
+<p><strong>Semester:</strong> {{ semester }}</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Registration Number</th>
+            <th>Marks</th>
+            <!-- Add more columns as needed -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+            <tr>
+                <td>{{ result.student.name }}</td>
+                <td>{{ result.student.registration_number }}</td>
+                <td>{{ result.marks }}</td>
+                <!-- Add more data as needed -->
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3">No results found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="#" onclick="window.print();" class="btn btn-primary">Print Results</a>
+<a href="{% url 'view_result:batch_result' %}" class="btn btn-secondary">Back</a>
+{% endblock %}
