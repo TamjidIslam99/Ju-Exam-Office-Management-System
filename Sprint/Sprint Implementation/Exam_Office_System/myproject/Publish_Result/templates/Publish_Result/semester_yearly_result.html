@@ -1,0 +1,49 @@
+{% extends './base.html' %}
+
+{% block content %}
+<h2>Semester/Yearly Results</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="department_id">Select Department:</label>
+    <select name="department_id" id="department_id" required>
+        <option value="">Choose a department</option>
+        {% for department in departments %}
+            <option value="{{ department.id }}"{% if selected_department and selected_department.id == department.id %} selected{% endif %}>
+                {{ department.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label for="session">Select Session:</label>
+    <input type="text" name="session" id="session" value="{{ selected_session }}" required>
+
+    <button type="submit">View Exams</button>
+</form>
+
+{% if exam_results %}
+    <h3>Exams for {{ selected_department.name }} in {{ selected_session }}</h3>
+    <table>
+        <tr>
+            <th>Exam Name</th>
+            <th>Result Uploaded</th>
+        </tr>
+        {% for exam_info in exam_results %}
+            <tr>
+                <td>{{ exam_info.exam.name }}</td>
+                <td>{% if exam_info.has_results_uploaded %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if all_results_uploaded %}
+        <h4>All results are uploaded. You can publish results.</h4>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="publish_results">Publish Result</button>
+        </form>
+    {% else %}
+        <h4>Not all results have been uploaded. Please check the exams.</h4>
+    {% endif %}
+{% endif %}
+{% endblock %}

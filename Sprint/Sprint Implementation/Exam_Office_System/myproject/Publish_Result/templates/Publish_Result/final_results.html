@@ -1,0 +1,25 @@
+{% extends './base.html' %}
+
+{% block content %}
+<h2>Average Marks for {{ selected_department.name }} in {{ selected_session }}</h2>
+
+<table>
+    <tr>
+        <th>Student Name</th>
+        <th>Average Marks</th>
+    </tr>
+    {% for result in final_results %}
+    <tr>
+        <td>{{ result.student.name }}</td>
+        <td>{{ result.average_marks|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<form method="post" action="{% url 'download_pdf' %}">
+    {% csrf_token %}
+    <input type="hidden" name="department_id" value="{{ selected_department.id }}">
+    <input type="hidden" name="session" value="{{ selected_session }}">
+    <button type="submit">Download PDF</button>
+</form>
+{% endblock %}

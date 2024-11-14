@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<examResults>
+    <result>
+        <student>
+            <id>20200650752</id>
+            <name>John Doe</name>
+            <course_code>405</course_code>
+            <score>85</score>
+        </student>
+    </result>
+    <result>
+        <student>
+            <id>20200650775</id>
+            <name>Jane Smith</name>
+            <course_code>405</course_code>
+            <score>90</score>
+        </student>
+    </result>
+</examResults>

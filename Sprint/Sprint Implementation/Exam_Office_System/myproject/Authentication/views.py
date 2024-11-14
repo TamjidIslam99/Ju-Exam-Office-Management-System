@@ -195,7 +195,7 @@ def dashboard(request):
     """
     user = request.user
     if user.role == 'Exam_Office':
-        attendances = Attendance.objects.all() 
+        attendances = Attendance.objects.all()
         return render(request, 'Exam_Office/exam_office_dashboard.html', {'attendances': attendances})
     elif user.role == 'Student':
         return render(request, 'Exam_Office/student_dashboard.html')

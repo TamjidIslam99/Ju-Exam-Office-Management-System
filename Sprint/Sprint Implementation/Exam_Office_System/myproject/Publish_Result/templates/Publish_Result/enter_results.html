@@ -1,0 +1,24 @@
+<!-- Publish_Result/templates/Publish_Result/enter_results.html -->
+{% extends './base.html' %}
+
+{% block title %}Enter Results for {{ exam }}{% endblock %}
+
+{% block content %}
+<h2>Enter Results for {{ exam }}</h2>
+
+<!-- Individual Result Entry Form -->
+<h3>Enter Individual Results</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit Result</button>
+</form>
+
+<!-- Bulk Upload Form -->
+<h3>Upload Bulk Results (CSV or Excel)</h3>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ bulk_form.as_p }}
+    <button type="submit" name="upload_bulk" class="btn btn-primary">Upload Results</button>
+</form>
+{% endblock %}

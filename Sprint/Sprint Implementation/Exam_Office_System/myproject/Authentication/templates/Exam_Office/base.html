@@ -12,6 +12,8 @@
             {% if user.is_authenticated %}
                 <li><a href="{% url 'office:dashboard' %}">Dashboard</a></li>
                 <li><a href="{% url 'office:logout' %}">Logout</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'office:login' %}">Login</a></li>
                 <li><a href="{% url 'office:register_exam_office' %}">Register Exam Office</a></li>
