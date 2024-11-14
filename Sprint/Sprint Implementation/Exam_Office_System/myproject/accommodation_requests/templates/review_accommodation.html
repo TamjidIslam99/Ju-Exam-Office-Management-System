@@ -1,0 +1,9 @@
+<!-- accommodation_requests/templates/accommodation_requests/review_accommodation.html -->
+<h2>Review Accommodation Request</h2>
+<p>Student: {{ accommodation_request.student.user.username }}</p>
+<p>Special Needs: {{ accommodation_request.special_needs }}</p>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Review</button>
+</form>

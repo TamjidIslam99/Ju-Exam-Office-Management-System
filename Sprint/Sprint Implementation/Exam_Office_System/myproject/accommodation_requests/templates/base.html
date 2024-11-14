@@ -1,0 +1,44 @@
+<!-- accommodation_requests/templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Accommodation Request System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Add any additional CSS or JavaScript files here -->
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'accommodation_requests:request_accommodation' %}">Request Accommodation</a></li>
+                <li><a href="{% url 'accommodation_requests:status' pk=request.user.student.accommodationrequest.pk %}">Request Status</a></li>
+                <li><a href="{% url 'accommodation_requests:review_accommodation' pk=request.user.student.accommodationrequest.pk %}">Review Requests</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>{% block header %}Accommodation Request System{% endblock %}</h1>
+
+        <!-- Display messages like success or error messages -->
+        <div id="messages">
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- The content specific to each page will be inserted here -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Exam Management System</p>
+    </footer>
+</body>
+</html>
