@@ -14,6 +14,10 @@ documentation for details.
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   
+
+   register_exam_views
+   exam_office_system_models
+
    models
    views
+

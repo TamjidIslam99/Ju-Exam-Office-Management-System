@@ -1,0 +1,23 @@
+<!-- Register_Exam/templates/register_exam/registration_failure.html -->
+
+{% extends 'Exam_Office/base.html' %}
+
+{% block content %}
+    <div class="alert alert-danger mt-4" role="alert">
+        <h4 class="alert-heading">Registration Failed!</h4>
+        <p>Unfortunately, your exam registration could not be completed.</p>
+        <hr>
+        {% if reasons %}
+            <p class="mb-3">Possible reasons include:</p>
+            <ul>
+                {% for reason in reasons.split(". ") %}
+                    <li>{{ reason }}.</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No specific reasons provided.</p>
+        {% endif %}
+        <p>If the issue persists, please contact the exam office for further assistance.</p>
+    </div>
+    <a href="{% url 'register_exam:register_exam' %}" class="btn btn-secondary mt-3">Try Again</a>
+{% endblock %}
