@@ -1,0 +1,19 @@
+<!-- answer_script_management/templates/answer_script_management/manage_answer_scripts.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Answer Scripts</title>
+</head>
+<body>
+    <h1>Manage Answer Scripts</h1>
+    <ul>
+        {% for exam in exams %}
+            <li>
+                <a href="{% url 'view_attendance_and_scripts' exam.id %}">{{ exam.course.course_code }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

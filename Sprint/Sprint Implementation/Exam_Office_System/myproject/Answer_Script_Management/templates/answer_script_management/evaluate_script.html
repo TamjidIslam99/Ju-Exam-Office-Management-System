@@ -1,0 +1,25 @@
+<!-- answer_script_management/templates/answer_script_management/evaluate_script.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Evaluate Script</title>
+</head>
+<body>
+    <h1>Evaluate Script for {{ answer_script.student.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="marks_examiner1">Marks by Examiner 1:</label>
+        <input type="number" name="marks_examiner1" id="marks_examiner1" value="{{ answer_script.marks_examiner1 }}">
+        <br>
+        <label for="marks_examiner2">Marks by Examiner 2:</label>
+        <input type="number" name="marks_examiner2" id="marks_examiner2" value="{{ answer_script.marks_examiner2 }}">
+        <br>
+        <label for="marks_examiner3">Marks by Examiner 3:</label>
+        <input type="number" name="marks_examiner3" id="marks_examiner3" value="{{ answer_script.marks_examiner3 }}">
+        <br>
+        <button type="submit">Submit Evaluation</button>
+    </form>
+</body>
+</html>

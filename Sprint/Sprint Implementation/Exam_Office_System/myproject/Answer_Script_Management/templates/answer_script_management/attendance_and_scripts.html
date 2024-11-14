@@ -1,0 +1,26 @@
+<!-- answer_script_management/templates/answer_script_management/attendance_and_scripts.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance and Answer Scripts</title>
+</head>
+<body>
+    <h1>Attendance for {{ exam.course.course_code }}</h1>
+    <h2>Students</h2>
+    <ul>
+        {% for student in students %}
+            <li>{{ student.name }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Answer Scripts</h2>
+    <ul>
+        {% for script in answer_scripts %}
+            <li>
+                <a href="{% url 'evaluate_script' script.id %}">Evaluate Script for {{ script.student.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
