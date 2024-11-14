@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remunerate_Teachers.views &mdash; Remunerate Teachers 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Remunerate Teachers
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">Remunerate Teachers Views</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Remunerate Teachers</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Remunerate_Teachers.views</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Remunerate_Teachers.views</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Remunerate_Teachers/views.py</span>
+
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">get_object_or_404</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="kn">import</span> <span class="n">View</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">messages</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.mixins</span> <span class="kn">import</span> <span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">UserPassesTestMixin</span>
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">RemunerationCreationForm</span><span class="p">,</span> <span class="n">RemunerationUpdateForm</span>
+<span class="kn">from</span> <span class="nn">Exam_Office_System.models</span> <span class="kn">import</span> <span class="n">TeacherRemuneration</span>
+
+
+<div class="viewcode-block" id="ExamOfficeRequiredMixin">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.ExamOfficeRequiredMixin">[docs]</a>
+<span class="k">class</span> <span class="nc">ExamOfficeRequiredMixin</span><span class="p">(</span><span class="n">UserPassesTestMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mixin to ensure that the user has the &#39;Exam_Office&#39; role.</span>
+
+<span class="sd">    This mixin restricts access to views so that only users with the</span>
+<span class="sd">    &#39;Exam_Office&#39; role can interact with certain functionalities.</span>
+
+<span class="sd">    :ivar str error_message: The error message displayed when permission is denied.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">error_message</span> <span class="o">=</span> <span class="s1">&#39;Only exam office users can perform this action.&#39;</span>
+
+<div class="viewcode-block" id="ExamOfficeRequiredMixin.test_func">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.ExamOfficeRequiredMixin.test_func">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the current user has the &#39;Exam_Office&#39; role.</span>
+
+<span class="sd">        :return: True if the user has the &#39;Exam_Office&#39; role, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="s1">&#39;Exam_Office&#39;</span></div>
+
+
+<div class="viewcode-block" id="ExamOfficeRequiredMixin.handle_no_permission">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.ExamOfficeRequiredMixin.handle_no_permission">[docs]</a>
+    <span class="k">def</span> <span class="nf">handle_no_permission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle the scenario where a user does not have the required permissions.</span>
+
+<span class="sd">        This method adds an error message and redirects the user to the dashboard.</span>
+
+<span class="sd">        :return: An HTTP redirect response to the &#39;dashboard&#39; URL.</span>
+<span class="sd">        :rtype: HttpResponseRedirect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">)</span>  <span class="c1"># Ensure &#39;dashboard&#39; URL exists</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="CreateRemunerationsView">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.CreateRemunerationsView">[docs]</a>
+<span class="k">class</span> <span class="nc">CreateRemunerationsView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">ExamOfficeRequiredMixin</span><span class="p">,</span> <span class="n">View</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    View to handle the creation of teacher remunerations by exam office users.</span>
+
+<span class="sd">    This view allows users with the &#39;Exam_Office&#39; role to create new remuneration</span>
+<span class="sd">    entries for teachers based on their roles in exams.</span>
+
+<span class="sd">    :ivar str template_name: The path to the template used for rendering the remuneration creation form.</span>
+<span class="sd">    :ivar dict ROLE_AMOUNT_MAPPING: A mapping of teacher roles to their corresponding remuneration amounts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;remunerate_teachers/create_remunerations.html&#39;</span>
+
+    <span class="n">ROLE_AMOUNT_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Invigilator&#39;</span><span class="p">:</span> <span class="mf">1000.00</span><span class="p">,</span>
+        <span class="s1">&#39;Examiner&#39;</span><span class="p">:</span> <span class="mf">2000.00</span><span class="p">,</span>
+        <span class="s1">&#39;QuestionSetter&#39;</span><span class="p">:</span> <span class="mf">1200.00</span><span class="p">,</span>
+        <span class="s1">&#39;Moderator&#39;</span><span class="p">:</span> <span class="mf">800.00</span><span class="p">,</span>
+        <span class="s1">&#39;Translator&#39;</span><span class="p">:</span> <span class="mf">500.00</span><span class="p">,</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="CreateRemunerationsView.get">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.CreateRemunerationsView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle GET requests to display the remuneration creation form.</span>
+
+<span class="sd">        :param request: The HTTP request object.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :return: Rendered HTML page with the remuneration creation form.</span>
+<span class="sd">        :rtype: HttpResponse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">RemunerationCreationForm</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="CreateRemunerationsView.post">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.CreateRemunerationsView.post">[docs]</a>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle POST requests to create a new remuneration entry.</span>
+
+<span class="sd">        This method processes the submitted form data, validates it, and saves a new</span>
+<span class="sd">        TeacherRemuneration instance. If the amount is not provided, it is automatically</span>
+<span class="sd">        calculated based on the teacher&#39;s role.</span>
+
+<span class="sd">        :param request: The HTTP request object containing form data.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :return: Redirects to the remunerations list view upon successful creation,</span>
+<span class="sd">                 or re-renders the form with errors if validation fails.</span>
+<span class="sd">        :rtype: HttpResponseRedirect or HttpResponse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">RemunerationCreationForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">remuneration</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="c1"># If amount is not provided, calculate based on role</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">remuneration</span><span class="o">.</span><span class="n">amount</span><span class="p">:</span>
+                <span class="n">remuneration</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ROLE_AMOUNT_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remuneration</span><span class="o">.</span><span class="n">role</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">)</span>
+            <span class="n">remuneration</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Remuneration created successfully.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;remunerate_teachers:remunerations_list&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RemunerationsListView">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.RemunerationsListView">[docs]</a>
+<span class="k">class</span> <span class="nc">RemunerationsListView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">ExamOfficeRequiredMixin</span><span class="p">,</span> <span class="n">View</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    View to list all remunerations.</span>
+
+<span class="sd">    This view displays a comprehensive list of all TeacherRemuneration entries</span>
+<span class="sd">    within the system, accessible only to users with the &#39;Exam_Office&#39; role.</span>
+
+<span class="sd">    :ivar str template_name: The path to the template used for rendering the remunerations list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;remunerate_teachers/remunerations_list.html&#39;</span>
+
+<div class="viewcode-block" id="RemunerationsListView.get">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.RemunerationsListView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle GET requests to display all remunerations.</span>
+
+<span class="sd">        :param request: The HTTP request object.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :return: Rendered HTML page with a list of all remunerations.</span>
+<span class="sd">        :rtype: HttpResponse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">remunerations</span> <span class="o">=</span> <span class="n">TeacherRemuneration</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;remunerations&#39;</span><span class="p">:</span> <span class="n">remunerations</span><span class="p">})</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PendingRemunerationsView">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.PendingRemunerationsView">[docs]</a>
+<span class="k">class</span> <span class="nc">PendingRemunerationsView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">ExamOfficeRequiredMixin</span><span class="p">,</span> <span class="n">View</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    View to list all pending remunerations for exam office users.</span>
+
+<span class="sd">    This view displays only those TeacherRemuneration entries that have a status of &#39;Pending&#39;,</span>
+<span class="sd">    allowing exam office users to review and update their statuses.</span>
+
+<span class="sd">    :ivar str template_name: The path to the template used for rendering the pending remunerations list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;remunerate_teachers/pending_remunerations.html&#39;</span>
+
+<div class="viewcode-block" id="PendingRemunerationsView.get">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.PendingRemunerationsView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle GET requests to display pending remunerations.</span>
+
+<span class="sd">        :param request: The HTTP request object.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :return: Rendered HTML page with a list of pending remunerations.</span>
+<span class="sd">        :rtype: HttpResponse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">remunerations</span> <span class="o">=</span> <span class="n">TeacherRemuneration</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s1">&#39;Pending&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;remunerations&#39;</span><span class="p">:</span> <span class="n">remunerations</span><span class="p">})</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UpdateRemunerationStatusView">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.UpdateRemunerationStatusView">[docs]</a>
+<span class="k">class</span> <span class="nc">UpdateRemunerationStatusView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">ExamOfficeRequiredMixin</span><span class="p">,</span> <span class="n">View</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    View to update the status of a remuneration to &#39;Paid&#39;.</span>
+
+<span class="sd">    This view processes the submitted form data to update the status of a specific</span>
+<span class="sd">    TeacherRemuneration entry. Only users with the &#39;Exam_Office&#39; role can perform this action.</span>
+
+<span class="sd">    :ivar str template_name: The path to the template used for rendering the remuneration status update form.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;remunerate_teachers/update_remuneration_status.html&#39;</span>
+
+<div class="viewcode-block" id="UpdateRemunerationStatusView.post">
+<a class="viewcode-back" href="../../views.html#Remunerate_Teachers.views.UpdateRemunerationStatusView.post">[docs]</a>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle POST requests to update remuneration status.</span>
+
+<span class="sd">        This method validates the submitted form data and updates the status of the specified</span>
+<span class="sd">        TeacherRemuneration instance. If the data is invalid, it redirects back with an error message.</span>
+
+<span class="sd">        :param request: The HTTP request object containing form data.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :return: Redirects to the pending remunerations view upon successful update,</span>
+<span class="sd">                 or redirects back with an error message if validation fails.</span>
+<span class="sd">        :rtype: HttpResponseRedirect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">RemunerationUpdateForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">remuneration_id</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;remuneration_id&#39;</span><span class="p">]</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
+            <span class="n">remuneration</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">TeacherRemuneration</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">remuneration_id</span><span class="p">)</span>
+            <span class="n">remuneration</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+            <span class="n">remuneration</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Remuneration status updated successfully.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;remunerate_teachers:pending_remunerations&#39;</span><span class="p">)</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Invalid data submitted.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;remunerate_teachers:pending_remunerations&#39;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mahfuz Anam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

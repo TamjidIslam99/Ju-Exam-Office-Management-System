@@ -1,0 +1,18 @@
+<!-- Remunerate_Teachers/templates/remunerate_teachers/remunerations_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Remunerations</title>
+</head>
+<body>
+    <h1>All Remunerations</h1>
+    <ul>
+        {% for remuneration in remunerations %}
+            <li>{{ remuneration.teacher.name }} - {{ remuneration.role }} - {{ remuneration.amount }} - {{ remuneration.status }}</li>
+        {% empty %}
+            <li>No remunerations found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

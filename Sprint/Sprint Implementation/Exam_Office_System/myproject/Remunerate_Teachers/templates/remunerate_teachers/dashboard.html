@@ -1,0 +1,15 @@
+<!-- myproject/templates/dashboard.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome to the Dashboard</h1>
+    <p>This is a placeholder dashboard.</p>
+    <a href="{% url 'remunerate_teachers:create_remunerations' %}">Create Remuneration</a> |
+    <a href="{% url 'remunerate_teachers:remunerations_list' %}">View All Remunerations</a> |
+    <a href="{% url 'remunerate_teachers:pending_remunerations' %}">View Pending Remunerations</a>
+</body>
+</html>

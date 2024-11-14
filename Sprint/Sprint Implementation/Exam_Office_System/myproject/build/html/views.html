@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remunerate Teachers Views &mdash; Remunerate Teachers 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Remunerate Teachers documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Remunerate Teachers
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Remunerate Teachers Views</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Remunerate_Teachers.views.CreateRemunerationsView"><code class="docutils literal notranslate"><span class="pre">CreateRemunerationsView</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.CreateRemunerationsView.ROLE_AMOUNT_MAPPING"><code class="docutils literal notranslate"><span class="pre">CreateRemunerationsView.ROLE_AMOUNT_MAPPING</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.CreateRemunerationsView.get"><code class="docutils literal notranslate"><span class="pre">CreateRemunerationsView.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.CreateRemunerationsView.post"><code class="docutils literal notranslate"><span class="pre">CreateRemunerationsView.post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.CreateRemunerationsView.template_name"><code class="docutils literal notranslate"><span class="pre">CreateRemunerationsView.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin"><code class="docutils literal notranslate"><span class="pre">ExamOfficeRequiredMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin.error_message"><code class="docutils literal notranslate"><span class="pre">ExamOfficeRequiredMixin.error_message</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin.handle_no_permission"><code class="docutils literal notranslate"><span class="pre">ExamOfficeRequiredMixin.handle_no_permission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin.test_func"><code class="docutils literal notranslate"><span class="pre">ExamOfficeRequiredMixin.test_func()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Remunerate_Teachers.views.PendingRemunerationsView"><code class="docutils literal notranslate"><span class="pre">PendingRemunerationsView</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.PendingRemunerationsView.get"><code class="docutils literal notranslate"><span class="pre">PendingRemunerationsView.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.PendingRemunerationsView.template_name"><code class="docutils literal notranslate"><span class="pre">PendingRemunerationsView.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Remunerate_Teachers.views.RemunerationsListView"><code class="docutils literal notranslate"><span class="pre">RemunerationsListView</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.RemunerationsListView.get"><code class="docutils literal notranslate"><span class="pre">RemunerationsListView.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.RemunerationsListView.template_name"><code class="docutils literal notranslate"><span class="pre">RemunerationsListView.template_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Remunerate_Teachers.views.UpdateRemunerationStatusView"><code class="docutils literal notranslate"><span class="pre">UpdateRemunerationStatusView</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.UpdateRemunerationStatusView.post"><code class="docutils literal notranslate"><span class="pre">UpdateRemunerationStatusView.post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Remunerate_Teachers.views.UpdateRemunerationStatusView.template_name"><code class="docutils literal notranslate"><span class="pre">UpdateRemunerationStatusView.template_name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Remunerate Teachers</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Remunerate Teachers Views</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/views.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-Remunerate_Teachers.views">
+<span id="remunerate-teachers-views"></span><h1>Remunerate Teachers Views<a class="headerlink" href="#module-Remunerate_Teachers.views" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.CreateRemunerationsView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Remunerate_Teachers.views.</span></span><span class="sig-name descname"><span class="pre">CreateRemunerationsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#CreateRemunerationsView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.CreateRemunerationsView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMixin</span></code>, <a class="reference internal" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin" title="Remunerate_Teachers.views.ExamOfficeRequiredMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExamOfficeRequiredMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>View to handle the creation of teacher remunerations by exam office users.</p>
+<p>This view allows users with the ‘Exam_Office’ role to create new remuneration
+entries for teachers based on their roles in exams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template_name</strong> (<em>str</em>) – The path to the template used for rendering the remuneration creation form.</p></li>
+<li><p><strong>ROLE_AMOUNT_MAPPING</strong> (<em>dict</em>) – A mapping of teacher roles to their corresponding remuneration amounts.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.CreateRemunerationsView.ROLE_AMOUNT_MAPPING">
+<span class="sig-name descname"><span class="pre">ROLE_AMOUNT_MAPPING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Examiner':</span> <span class="pre">2000.0,</span> <span class="pre">'Invigilator':</span> <span class="pre">1000.0,</span> <span class="pre">'Moderator':</span> <span class="pre">800.0,</span> <span class="pre">'QuestionSetter':</span> <span class="pre">1200.0,</span> <span class="pre">'Translator':</span> <span class="pre">500.0}</span></em><a class="headerlink" href="#Remunerate_Teachers.views.CreateRemunerationsView.ROLE_AMOUNT_MAPPING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.CreateRemunerationsView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#CreateRemunerationsView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.CreateRemunerationsView.get" title="Link to this definition"></a></dt>
+<dd><p>Handle GET requests to display the remuneration creation form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rendered HTML page with the remuneration creation form.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.CreateRemunerationsView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#CreateRemunerationsView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.CreateRemunerationsView.post" title="Link to this definition"></a></dt>
+<dd><p>Handle POST requests to create a new remuneration entry.</p>
+<p>This method processes the submitted form data, validates it, and saves a new
+TeacherRemuneration instance. If the amount is not provided, it is automatically
+calculated based on the teacher’s role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object containing form data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Redirects to the remunerations list view upon successful creation,
+or re-renders the form with errors if validation fails.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponseRedirect or HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.CreateRemunerationsView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'remunerate_teachers/create_remunerations.html'</span></em><a class="headerlink" href="#Remunerate_Teachers.views.CreateRemunerationsView.template_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.ExamOfficeRequiredMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Remunerate_Teachers.views.</span></span><span class="sig-name descname"><span class="pre">ExamOfficeRequiredMixin</span></span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#ExamOfficeRequiredMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserPassesTestMixin</span></code></p>
+<p>Mixin to ensure that the user has the ‘Exam_Office’ role.</p>
+<p>This mixin restricts access to views so that only users with the
+‘Exam_Office’ role can interact with certain functionalities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_message</strong> (<em>str</em>) – The error message displayed when permission is denied.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.ExamOfficeRequiredMixin.error_message">
+<span class="sig-name descname"><span class="pre">error_message</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Only</span> <span class="pre">exam</span> <span class="pre">office</span> <span class="pre">users</span> <span class="pre">can</span> <span class="pre">perform</span> <span class="pre">this</span> <span class="pre">action.'</span></em><a class="headerlink" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin.error_message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.ExamOfficeRequiredMixin.handle_no_permission">
+<span class="sig-name descname"><span class="pre">handle_no_permission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#ExamOfficeRequiredMixin.handle_no_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin.handle_no_permission" title="Link to this definition"></a></dt>
+<dd><p>Handle the scenario where a user does not have the required permissions.</p>
+<p>This method adds an error message and redirects the user to the dashboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An HTTP redirect response to the ‘dashboard’ URL.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>HttpResponseRedirect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.ExamOfficeRequiredMixin.test_func">
+<span class="sig-name descname"><span class="pre">test_func</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#ExamOfficeRequiredMixin.test_func"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin.test_func" title="Link to this definition"></a></dt>
+<dd><p>Check if the current user has the ‘Exam_Office’ role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the user has the ‘Exam_Office’ role, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.PendingRemunerationsView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Remunerate_Teachers.views.</span></span><span class="sig-name descname"><span class="pre">PendingRemunerationsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#PendingRemunerationsView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.PendingRemunerationsView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMixin</span></code>, <a class="reference internal" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin" title="Remunerate_Teachers.views.ExamOfficeRequiredMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExamOfficeRequiredMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>View to list all pending remunerations for exam office users.</p>
+<p>This view displays only those TeacherRemuneration entries that have a status of ‘Pending’,
+allowing exam office users to review and update their statuses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>template_name</strong> (<em>str</em>) – The path to the template used for rendering the pending remunerations list.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.PendingRemunerationsView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#PendingRemunerationsView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.PendingRemunerationsView.get" title="Link to this definition"></a></dt>
+<dd><p>Handle GET requests to display pending remunerations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rendered HTML page with a list of pending remunerations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.PendingRemunerationsView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'remunerate_teachers/pending_remunerations.html'</span></em><a class="headerlink" href="#Remunerate_Teachers.views.PendingRemunerationsView.template_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.RemunerationsListView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Remunerate_Teachers.views.</span></span><span class="sig-name descname"><span class="pre">RemunerationsListView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#RemunerationsListView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.RemunerationsListView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMixin</span></code>, <a class="reference internal" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin" title="Remunerate_Teachers.views.ExamOfficeRequiredMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExamOfficeRequiredMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>View to list all remunerations.</p>
+<p>This view displays a comprehensive list of all TeacherRemuneration entries
+within the system, accessible only to users with the ‘Exam_Office’ role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>template_name</strong> (<em>str</em>) – The path to the template used for rendering the remunerations list.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.RemunerationsListView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#RemunerationsListView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.RemunerationsListView.get" title="Link to this definition"></a></dt>
+<dd><p>Handle GET requests to display all remunerations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rendered HTML page with a list of all remunerations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.RemunerationsListView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'remunerate_teachers/remunerations_list.html'</span></em><a class="headerlink" href="#Remunerate_Teachers.views.RemunerationsListView.template_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.UpdateRemunerationStatusView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Remunerate_Teachers.views.</span></span><span class="sig-name descname"><span class="pre">UpdateRemunerationStatusView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#UpdateRemunerationStatusView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.UpdateRemunerationStatusView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMixin</span></code>, <a class="reference internal" href="#Remunerate_Teachers.views.ExamOfficeRequiredMixin" title="Remunerate_Teachers.views.ExamOfficeRequiredMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExamOfficeRequiredMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>View to update the status of a remuneration to ‘Paid’.</p>
+<p>This view processes the submitted form data to update the status of a specific
+TeacherRemuneration entry. Only users with the ‘Exam_Office’ role can perform this action.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>template_name</strong> (<em>str</em>) – The path to the template used for rendering the remuneration status update form.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.UpdateRemunerationStatusView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Remunerate_Teachers/views.html#UpdateRemunerationStatusView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Remunerate_Teachers.views.UpdateRemunerationStatusView.post" title="Link to this definition"></a></dt>
+<dd><p>Handle POST requests to update remuneration status.</p>
+<p>This method validates the submitted form data and updates the status of the specified
+TeacherRemuneration instance. If the data is invalid, it redirects back with an error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object containing form data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Redirects to the pending remunerations view upon successful update,
+or redirects back with an error message if validation fails.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponseRedirect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Remunerate_Teachers.views.UpdateRemunerationStatusView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'remunerate_teachers/update_remuneration_status.html'</span></em><a class="headerlink" href="#Remunerate_Teachers.views.UpdateRemunerationStatusView.template_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Remunerate Teachers documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mahfuz Anam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

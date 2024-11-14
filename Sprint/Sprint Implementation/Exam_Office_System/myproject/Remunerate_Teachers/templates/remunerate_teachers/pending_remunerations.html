@@ -1,0 +1,37 @@
+<!-- Remunerate_Teachers/templates/remunerate_teachers/pending_remunerations.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pending Remunerations</title>
+</head>
+<body>
+    <h1>Pending Remunerations</h1>
+    <ul>
+        {% for remuneration in remunerations %}
+            <li>
+                {{ remuneration.teacher.name }} - {{ remuneration.role }} - {{ remuneration.amount }} - {{ remuneration.status }}
+                <form method="post" action="{% url 'remunerate_teachers:update_remuneration_status' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="remuneration_id" value="{{ remuneration.id }}">
+                    <select name="status">
+                        {% for key, value in remuneration.STATUS_CHOICES %}
+                            <option value="{{ key }}" {% if remuneration.status == key %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Update Status</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>No pending remunerations.</li>
+        {% endfor %}
+    </ul>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
