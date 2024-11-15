@@ -13,7 +13,7 @@
 - **Abdullah Al Mamun**
 ## Intoduction
 
-Our Project is Exam Office Management System. We initially made the project predominantly for Jahangirnagar University.The primary purpose of the product is to improve the accuracy, efficiency, and transparency of examrelated processes. The software serves as a centralized platform for the exam office to manage multiple tasks,
+Our Project is Exam Office Management System. We initially made the project predominantly for Jahangirnagar University. The primary purpose of the product is to improve the accuracy, efficiency, and transparency of exam related processes. The software serves as a centralized platform for the exam office to manage multiple tasks,
 
 ## Features
 #### Exam Office
