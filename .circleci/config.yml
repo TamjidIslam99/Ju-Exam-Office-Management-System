@@ -1,44 +1,67 @@
-# Couldn't automatically generate a config from your source code.
-# This is a generic template to serve as a base for your custom config
-# See: https://circleci.com/docs/configuration-reference
 version: 2.1
+
 jobs:
+  setup:
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r 'Sprint/Sprint Implementation/Exam_Office_System/myproject/requirements.txt'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
   test:
-    docker:
-      - image: cimg/base:stable
     steps:
-      - checkout
-      # Replace this with a real test runner invocation
+      - attach_workspace:
+          at: .
       - run:
-          name: Run tests
-          command: echo 'replace me with real tests!' && false
-  build:
-    docker:
-      - image: cimg/base:stable
+          name: Run pytest for all apps
+          command: |
+            cd 'Sprint/Sprint Implementation/Exam_Office_System/myproject'
+            for app in $(ls -d */); do
+              pytest $app/tests
+            done
+
+  docs:
     steps:
-      - checkout
-      # Replace this with steps to build a package, or executable
+      - attach_workspace:
+          at: .
       - run:
-          name: Build an artifact
-          command: touch example.txt
-      - store_artifacts:
-          path: example.txt
-  deploy:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+          name: Build Sphinx documentation
+          command: |
+            cd 'Sprint/Sprint Implementation/Exam_Office_System/myproject/source'
+            make html
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'Sprint/Sprint Implementation/Exam_Office_System/myproject/source/_build'
+
 workflows:
-  example:
+  version: 2
+  build_and_test:
     jobs:
-      - test
-      - build:
+      - setup:
+          filters:
+            branches:
+              only:
+                - main
+                - ApplyForMarksheet-Tamjid
+      - test:
           requires:
-            - test
-      - deploy:
+            - setup
+          filters:
+            branches:
+              only:
+                - main
+                - ApplyForMarksheet-Tamjid
+      - docs:
           requires:
-            - test
-Next: set up your trig
+            - setup
+          filters:
+            branches:
+              only:
+                - main
+                - ApplyForMarksheet-Tamjid
