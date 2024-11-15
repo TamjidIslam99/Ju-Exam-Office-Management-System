@@ -54,7 +54,7 @@ workflows:
             branches:
               only:
                 - main
-                - ApplyForMarksheet-Tamjid
+                - ci-test-branch
       - test:
           requires:
             - setup
@@ -62,7 +62,7 @@ workflows:
             branches:
               only:
                 - main
-                - ApplyForMarksheet-Tamjid
+                - ci-test-branch
       - docs:
           requires:
             - setup
@@ -70,4 +70,4 @@ workflows:
             branches:
               only:
                 - main
-                - ApplyForMarksheet-Tamjid
+                - ci-test-branch
