@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Exam_Office_System',
     'Authentication',
+    'Publish_Exam_Calendar',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ AUTH_USER_MODEL = 'Exam_Office_System.User'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

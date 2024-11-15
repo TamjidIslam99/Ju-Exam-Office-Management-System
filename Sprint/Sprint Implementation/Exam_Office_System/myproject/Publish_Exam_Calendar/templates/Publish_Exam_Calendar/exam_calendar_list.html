@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Calendar List</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'exam_calendar_list' %}">Home</a> |
+            <a href="{% url 'create_exam_calendar' %}">Create Exam Calendar</a> <!-- Link to Create Exam Calendar -->
+        </nav>
+    </header>
+    <main>
+        <h2>Exam Calendar List</h2>
+        
+        {% if exam_calendars %}
+            <ul>
+                {% for calendar in exam_calendars %}
+                    <li>
+                        <a href="{% url 'exam_calendar_detail' calendar.pk %}">
+                            {{ calendar.system_type }}: {{ calendar.exam_start_date }} to {{ calendar.exam_end_date }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No exam calendars available.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

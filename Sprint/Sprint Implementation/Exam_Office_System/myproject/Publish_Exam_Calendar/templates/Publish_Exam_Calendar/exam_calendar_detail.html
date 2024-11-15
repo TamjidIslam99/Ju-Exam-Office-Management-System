@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Calendar Details</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'exam_calendar_list' %}">Home</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Exam Calendar Details</h2>
+        <p>System Type: {{ exam_calendar.system_type }}</p>
+        <p>Class Start Date: {{ exam_calendar.class_start_date }}</p>
+        <p>Class End Date: {{ exam_calendar.class_end_date }}</p>
+        <p>Exam Start Date: {{ exam_calendar.exam_start_date }}</p>
+        <p>Exam End Date: {{ exam_calendar.exam_end_date }}</p>
+        <p>Approval Status: {{ exam_calendar.approval_status }}</p>
+        <p>Remarks: {{ exam_calendar.remarks }}</p>
+    </main>
+</body>
+</html>

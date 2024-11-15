@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Exam Calendar</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <h2>Create Exam Calendar</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <h3>Exam Calendar Details</h3>
+        {{ form_calendar.as_p }}  <!-- Renders your form fields here -->
+
+        <script>
+            $(document).ready(function() {
+                // Apply the jQuery UI datepicker to the date fields
+                $("input[name='class_start_date']").datepicker({ dateFormat: 'yy-mm-dd' });
+                $("input[name='class_end_date']").datepicker({ dateFormat: 'yy-mm-dd' });
+                $("input[name='exam_start_date']").datepicker({ dateFormat: 'yy-mm-dd' });
+                $("input[name='exam_end_date']").datepicker({ dateFormat: 'yy-mm-dd' });
+            });
+        </script>
+
+        <h3>Exam Details</h3>
+        {{ form_exam.as_p }}  <!-- Renders your Exam form fields here -->
+
+        <button type="submit">Create</button>
+    </form>
+</body>
+</html>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 # Custom User Manager
@@ -315,5 +316,68 @@ class Sickbed(models.Model):
 
     student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='sick_student', null=True, blank=True)
     reason = models.TextField()
+
+
+class ExamCalendar(models.Model):
+    # Adjusted attributes to match existing database structure
+    system_type = models.CharField(max_length=20, choices=[('Semester', 'Semester'), ('Yearly', 'Yearly')])  # Original field
+    class_start_date = models.DateField()  # Original field
+    class_end_date = models.DateField()  # Original field
+    exam_start_date = models.DateField()  # Original field
+    exam_end_date = models.DateField()  # Original field
+    created_at = models.DateTimeField(auto_now_add=True)  # Original field
+
+    # Existing approval fields
+    approved_by = models.CharField(max_length=255, default='Pro Vice Chancellor')  # Original field
+    approval_status = models.CharField(
+        max_length=20,
+        choices=[('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected')],
+        default='Pending'
+    )  # Original field
+    approval_date = models.DateField(null=True, blank=True)  # Original field
+    remarks = models.TextField(null=True, blank=True)  # Original field
+
+    # Existing notification fields
+    notification_title = models.CharField(max_length=255, null=True, blank=True)  # Original field
+    notification_message = models.TextField(null=True, blank=True)  # Original field
+    notification_created_at = models.DateTimeField(null=True, blank=True)  # Original field
+    is_read = models.BooleanField(default=False)  # Original field
+
+    # Existing public notice fields
+    public_notice_title = models.CharField(max_length=255, null=True, blank=True)  # Original field
+    public_notice_content = models.TextField(null=True, blank=True)  # Original field
+    public_notice_published_date = models.DateField(null=True, blank=True)  # Original field
+
+    def __str__(self):
+        return f"Exam Calendar ({self.system_type}): {self.exam_start_date} to {self.exam_end_date}"
+
+    # Method to approve the calendar, adapted to match database needs
+    def approve(self, remarks=''):
+        self.approval_status = 'Approved'
+        self.approval_date = timezone.now().date()  # Using `timezone.now()` for dynamic current date
+        self.remarks = remarks
+        self.save()
+
+    # Method to reject the calendar, adapted for existing structure
+    def reject(self, remarks=''):
+        self.approval_status = 'Rejected'
+        self.approval_date = timezone.now().date()  # Using `timezone.now()` for current date
+        self.remarks = remarks
+        self.save()
+
+    # Method to create a notification, adapted for existing structure
+    def create_notification(self, title, message):
+        self.notification_title = title
+        self.notification_message = message
+        self.notification_created_at = timezone.now()
+        self.is_read = False
+        self.save()
+
+    # Method to publish a public notice, adapted for existing structure
+    def publish_notice(self, title, content):
+        self.public_notice_title = title
+        self.public_notice_content = content
+        self.public_notice_published_date = timezone.now().date()
+        self.save()
 
 
