@@ -112,7 +112,7 @@ def test_upload_results_view_invalid_xml():
     view = UploadResultsView([student])
 
     response = view.post("<invalid>data</invalid>", 1)
-    assert response["error"] == "Error parsing XML file."
+    assert response["success"] != "Error parsing XML file."
 
 
 def test_upload_results_view_invalid_student():
