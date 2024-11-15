@@ -2,8 +2,8 @@ version: 2.1
 
 jobs:
   setup:
-    docker:
-      - image: circleci/python:3.12.4
+    executor:
+      name: python/default
     steps:
       - checkout
       - run:
@@ -11,17 +11,12 @@ jobs:
           command: |
             pip install --upgrade pip
             pip install -r 'Sprint/Sprint Implementation/Exam_Office_System/myproject/requirements.txt'
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
 
   test:
-    docker:
-      - image: circleci/python:3.12.4
+    executor:
+      name: python/default
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - run:
           name: Run pytest for all apps
           command: |
@@ -31,20 +26,15 @@ jobs:
             done
 
   docs:
-    docker:
-      - image: circleci/python:3.12.4
+    executor:
+      name: python/default
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - run:
           name: Build Sphinx documentation
           command: |
             cd 'Sprint/Sprint Implementation/Exam_Office_System/myproject/source'
             make html
-      - persist_to_workspace:
-          root: .
-          paths:
-            - 'Sprint/Sprint Implementation/Exam_Office_System/myproject/source/_build'
 
 workflows:
   version: 2
