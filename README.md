@@ -1,6 +1,6 @@
 # JU Exam Office Management System
 ---
-![JU Exam office1.jpeg](https://github.com/TamjidIslam99/Ju-Exam-Office-Management-System/blob/main/Resources/Images/JU%20Exam%20office1.jpeg)
+![JU Exam office(1).jpeg]( https://github.com/TamjidIslam99/Ju-Exam-Office-Management-System/blob/main/Resources/Images/JU%20Exam%20office%20(1).jpeg)
 ## Team Name: JU_Hexagon
 *Batch 49, Department of Computer Science & Engineering, Jahangirnagar University, Bangladesh*
 
