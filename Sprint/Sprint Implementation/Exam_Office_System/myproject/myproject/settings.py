@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Exam_Office_System',
     'Authentication',
     'TrackingAttendence',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

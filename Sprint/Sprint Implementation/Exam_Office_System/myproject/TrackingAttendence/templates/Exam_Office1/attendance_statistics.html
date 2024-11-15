@@ -1,22 +1,26 @@
 {% extends 'Exam_Office/base.html' %}
 
 {% block content %}
-  <h1>Attendance Statistics</h1>
+  <h1 class="mb-4">Attendance Statistics</h1>
 
   <!-- Student Attendance Statistics -->
-  <div>
-    <h3>Student Attendance</h3>
-    <p>Present: {{ student_present }} students</p>
-    <p>Absent: {{ student_absent }} students</p>
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3 class="card-title">Student Attendance</h3>
+      <p class="card-text">Present: {{ student_present }} students</p>
+      <p class="card-text">Absent: {{ student_absent }} students</p>
+    </div>
   </div>
 
   <!-- Teacher Attendance Statistics -->
-  <div>
-    <h3>Teacher Attendance</h3>
-    <p>Present: {{ teacher_present }} teachers</p>
-    <p>Absent: {{ teacher_absent }} teachers</p>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">Teacher Attendance</h3>
+      <p class="card-text">Present: {{ teacher_present }} teachers</p>
+      <p class="card-text">Absent: {{ teacher_absent }} teachers</p>
+    </div>
   </div>
 
   <!-- Back to dashboard -->
-  <a href="{% url 'office:dashboard' %}">Back to Dashboard</a>
+  <a href="{% url 'office:dashboard' %}" class="btn btn-primary mt-3">Back to Dashboard</a>
 {% endblock %}
