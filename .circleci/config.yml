@@ -1,25 +1,27 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@1.4.0  # Include the Python orb
-
 jobs:
   setup:
-    executor:
-      name: python/default  # Use Python orb's default executor
+    docker:
+      - image: circleci/python:3.10
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            pip install --upgrade pip
-            pip install -r 'Sprint/Sprint Implementation/Exam_Office_System/myproject/requirements.txt'
+            python -m pip install --upgrade pip
+            python -m pip install -r 'Sprint/Sprint Implementation/Exam_Office_System/myproject/requirements.txt'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 
   test:
-    executor:
-      name: python/default
+    docker:
+      - image: circleci/python:3.10
     steps:
-      - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Run pytest for all apps
           command: |
@@ -29,15 +31,20 @@ jobs:
             done
 
   docs:
-    executor:
-      name: python/default
+    docker:
+      - image: circleci/python:3.10
     steps:
-      - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Build Sphinx documentation
           command: |
             cd 'Sprint/Sprint Implementation/Exam_Office_System/myproject/source'
             make html
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'Sprint/Sprint Implementation/Exam_Office_System/myproject/source/_build'
 
 workflows:
   version: 2
