@@ -2,13 +2,16 @@ version: 2.1
 
 jobs:
   setup:
-    docker:
-      - image: circleci/python:3.12.4
+    machine:  # Use the machine executor
     steps:
       - checkout
       - run:
-          name: Install dependencies
+          name: Install Python and dependencies
           command: |
+            sudo apt update
+            sudo apt install -y python3-pip python3-venv
+            python3 -m venv env
+            source env/bin/activate
             pip install --upgrade pip
             pip install -r 'Sprint/Sprint Implementation/Exam_Office_System/myproject/requirements.txt'
       - persist_to_workspace:
@@ -17,8 +20,7 @@ jobs:
             - .
 
   test:
-    docker:
-      - image: circleci/python:3.12.4
+    machine:
     steps:
       - attach_workspace:
           at: .
@@ -27,12 +29,10 @@ jobs:
           command: |
             cd 'Sprint/Sprint Implementation/Exam_Office_System/myproject'
             for app in $(ls -d */); do
-              pytest $app/tests
-            done
+              pytest $app/tests || exit 1  # Fail if any test fails
 
   docs:
-    docker:
-      - image: circleci/python:3.12.4
+    machine:
     steps:
       - attach_workspace:
           at: .
