@@ -2,13 +2,12 @@ version: 2.1
 
 jobs:
   setup:
-    docker:
-      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
+            pip install --upgrade pip
             pip install -r 'Sprint/Sprint Implementation/Exam_Office_System/myproject/requirements.txt'
       - persist_to_workspace:
           root: .
@@ -16,8 +15,6 @@ jobs:
             - .
 
   test:
-    docker:
-      - image: circleci/python:3.8
     steps:
       - attach_workspace:
           at: .
@@ -30,8 +27,6 @@ jobs:
             done
 
   docs:
-    docker:
-      - image: circleci/python:3.8
     steps:
       - attach_workspace:
           at: .
