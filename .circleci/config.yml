@@ -2,6 +2,8 @@ version: 2.1
 
 jobs:
   setup:
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
@@ -14,6 +16,8 @@ jobs:
             - .
 
   test:
+    docker:
+      - image: circleci/python:3.8
     steps:
       - attach_workspace:
           at: .
@@ -26,6 +30,8 @@ jobs:
             done
 
   docs:
+    docker:
+      - image: circleci/python:3.8
     steps:
       - attach_workspace:
           at: .
