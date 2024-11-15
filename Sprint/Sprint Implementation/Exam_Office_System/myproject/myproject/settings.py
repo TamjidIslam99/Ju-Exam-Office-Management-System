@@ -40,6 +40,17 @@ INSTALLED_APPS = [
     'Exam_Office_System',
     'Authentication',
     'TrackingAttendence',
+    'Answer_Script_Management',
+    'Apply_Certificate',
+    'ApplyForMarksheet',
+    'Exam_Schedule',
+    'Manage_Exam_Materials',
+    'Publish_Result',
+    'Register_Exam',
+    'Remunerate_Teachers',
+    'View_Result',
+
+
 ]
 
 MIDDLEWARE = [
