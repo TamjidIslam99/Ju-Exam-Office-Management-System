@@ -1,9 +1,12 @@
 version: 2.1
 
+orbs:
+  python: circleci/python@1.4.0  # Include the Python orb
+
 jobs:
   setup:
     executor:
-      name: python/default
+      name: python/default  # Use Python orb's default executor
     steps:
       - checkout
       - run:
